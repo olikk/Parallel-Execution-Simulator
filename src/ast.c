@@ -74,13 +74,35 @@ void ast_print(ast* ast, int indent) {
   for (int i = 0; i < indent; i++)
     printf("    ");
   printf("%s", ast->type);
-  if (strcmp(ast->type, "number") == 0)
-    printf(" (%d)\n", ast->u.number);
-  else if (strcmp(ast->type, "id") == 0)
-    printf(" (%s)\n", ast->u.id);
-  else {
-    printf("\n");
-    ast_print(ast->u.operation.left, indent + 1);
-    ast_print(ast->u.operation.right, indent + 1);
+  switch (ast->type){
+    case id_type :
+      printf(" (%s)\n", ast->u.id);
+      break;
+    case number_type : 
+      printf(" (%d)\n", ast->u.number);
+      break;
+    case operation_type :
+      printf("%s", ast->u.operation.op);
+      printf("\n");
+      ast_print(ast->u.operation.left, indent + 1);
+      ast_print(ast->u.operation.right, indent + 1);
+      break;
+    case assignment_type :
+      printf("%s = \n", ast->u.assignement.name);
+      ast_print(ast->u.operation.right, indent + 1);
+      
+    case while_type :
+      printf("\n");
+      ast_print(ast->u.while_stmt.statements, indent + 1);
+      break;
+      //statements_type, 
+    case if_type : 
+      printf("\n");
+      ast_print(ast->u.if_stmt.if_branch, indent + 1);
+      if (ast->u.if_stmt.if_branch){
+        ast_print(ast->u.if_stmt.else_branch, indent + 1);
+      }
+      break;
+      // last_element
   }
 }
