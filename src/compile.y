@@ -31,13 +31,15 @@
   %type <label> tag
   */
 }
-
+%start program
 %token WHILE FOR IF ELSE ELSEIF 
 %token BLANK
 
-%type <ast> affine
+%type <ast> affine condition range
+%type <ast> stmt list_stmt
+%type <ast> program
 
-%token <string> COMP
+%token <string> COMP RANGE
 %token <string> ID
 %token <value> NUMBER
 
@@ -52,12 +54,16 @@
 //precedence left TYPE ID;
 
 %%
-
+program: list_stmt                                  { printf("rendering AST\n"); ast_print($1, 0); }
+    ;
 stmt:
-        ID ';'
-    |   FOR ID "=" NUMBER ".." NUMBER stmt ';'
-    |   IF '(' condition ')' stmt ';'
-    |   IF '(' condition ')' '{' list_stmt '}' 
+        ID ';'                                      { printf("ID stmt\n"); $$ = ast_new_id($1); }
+    |   FOR ID '=' range stmt                    { printf("FOR stmt\n"); $$ = ast_new_for($2, $4, $5); }
+    |   IF '(' condition ')' stmt                   { printf("IF stmt\n"); $$ = ast_new_if($3, $5, NULL); }
+    |   IF '(' condition ')' '{' list_stmt '}'      { $$ = ast_new_if($3, $6, NULL); }
+    ;
+
+range: NUMBER RANGE NUMBER                           { printf("range\n");$$ = ast_new_operation("range", $1, $3); }
     ;
 
 list_stmt: 
@@ -65,17 +71,19 @@ list_stmt:
     |   stmt
     ;
 
+
+
 affine:
-        affine "+" affine   { $$ = ast_new_operation("+", $1, $3); }
-    |   affine "-" affine   { $$ = ast_new_operation("-", $1, $3); }
-    | '(' affine ')'  { $$ = $2; }
-    | ID            { $$ = ast_new_id($1); }
-    | NUMBER        { $$ = ast_new_number($1); }
-    ;
-condition:
-        affine COMP affine
+        affine '+' affine                          { $$ = ast_new_operation("+", $1, $3); }
+    |   affine '-' affine                           { $$ = ast_new_operation("-", $1, $3); }
+    | '(' affine ')'                                { $$ = $2; }
+    | ID                                            { $$ = ast_new_id($1); }
+    | NUMBER                                        { $$ = ast_new_number($1); }
     ;
 
+condition:
+        affine COMP affine                          { $$ = ast_new_operation($2, $1, $3); }
+    ;
 
 %%
 

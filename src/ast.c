@@ -5,14 +5,15 @@
 
 #include <assert.h>
 
-static void* check_alloc(size_t sz)
+void* check_alloc(size_t sz)
 {
-    void* result = calloc(sz, 1);
+    void* result = malloc(sz);
     if(!result)
     {
-        fprintf(stderr, "alloc failed\n");
+        printf("alloc failed\n");
         exit(1);
     }
+    return result;
 }
 
 ast* ast_new_operation(char* op, ast* left, ast* right) {
@@ -28,13 +29,13 @@ ast* ast_new_operation(char* op, ast* left, ast* right) {
 
 }
 
-ast* ast_new_assignement(char* name, ast* right){
+ast* ast_new_assignment(char* name, ast* right){
 
-  ast* new = malloc(sizeof(ast));
+  ast* new = check_alloc(sizeof(ast));
 
-  new->type = assignement_type;
-  new->u.assignement.name = name;
-  new->u.assignement.right = right;
+  new->type = assignment_type;
+  new->u.assignment.name = name;
+  new->u.assignment.right = right;
 
   return new;
 }
@@ -43,43 +44,70 @@ ast* ast_new_statements(int, ast*);
 
 ast* ast_new_while(ast*, ast*);
 
-ast* ast_new_if(ast* cond, ast* if_branch, ast* else_branch){
+ast* ast_new_for(char* it, ast* range, ast* stmt){
 
-  ast* new = malloc(sizeof(ast));
+  ast* new = check_alloc(sizeof(ast));
 
-  new->type = if_type;
-  new->u.if_stmt.cond = cond;
-  new->u.if_stmt.right.if_branch = if_branch;
-  new->u.if_stmt.right.else_branch = else_branch;
+  new->type = for_type;
+  new->u.for_stmt.range = range;
+  new->u.for_stmt.statements = stmt;
+  new->u.for_stmt.iterator = strdup(it);
   
   return new;
 
 }
 
+ast* ast_new_if(ast* cond, ast* if_branch, ast* else_branch){
+
+  ast* new = check_alloc(sizeof(ast));
+
+  new->type = if_type;
+  new->u.if_stmt.cond = cond;
+  new->u.if_stmt.if_branch = if_branch;
+  new->u.if_stmt.else_branch = else_branch;
+  
+  return new;
+
+}
+
+ast* ast_new_range(int l, int r){
+  
+  ast* new = check_alloc(sizeof(ast));
+
+  new->type = range_type;
+  new->u.range.node = "range";
+  new->u.range.left = l;
+  new->u.range.right = r;
+  
+  return new;
+}
+
 ast* ast_new_number(int number) {
-  ast* new = malloc(sizeof(ast));
-  new->type = strdup("number");
+  ast* new = check_alloc(sizeof(ast));
+  new->type = number_type;
   new->u.number = number;
   return new;
 }
 
 ast* ast_new_id(char* id) {
-  ast* new = malloc(sizeof(ast));
-  new->type = strdup("id");
-  new->u.id = strdup(id);
+  
+  ast* new = check_alloc(sizeof(ast));
+  (new->u).id = check_alloc(strlen(id) + 1);
+  strcpy( (new->u).id , id);
+  new->type = id_type;
   return new;
 }
 
 void ast_print(ast* ast, int indent) {
   for (int i = 0; i < indent; i++)
     printf("    ");
-  printf("%s", ast->type);
+  //printf("%u", ast->type);
   switch (ast->type){
     case id_type :
-      printf(" (%s)\n", ast->u.id);
+      printf("(%s)\n", ast->u.id);
       break;
     case number_type : 
-      printf(" (%d)\n", ast->u.number);
+      printf("(%d)\n", ast->u.number);
       break;
     case operation_type :
       printf("%s", ast->u.operation.op);
@@ -88,7 +116,7 @@ void ast_print(ast* ast, int indent) {
       ast_print(ast->u.operation.right, indent + 1);
       break;
     case assignment_type :
-      printf("%s = \n", ast->u.assignement.name);
+      printf("%s = \n", ast->u.assignment.name);
       ast_print(ast->u.operation.right, indent + 1);
       
     case while_type :
@@ -97,11 +125,20 @@ void ast_print(ast* ast, int indent) {
       break;
       //statements_type, 
     case if_type : 
-      printf("\n");
+      printf("if \n");
+      ast_print(ast->u.if_stmt.cond, indent + 1);
+      //printf("\n");
       ast_print(ast->u.if_stmt.if_branch, indent + 1);
-      if (ast->u.if_stmt.if_branch){
+      if (ast->u.if_stmt.else_branch){
         ast_print(ast->u.if_stmt.else_branch, indent + 1);
       }
+      break;
+    case for_type : 
+      printf("for \n");
+      printf("    %s", ast->u.for_stmt.iterator);
+      printf("\n");
+      ast_print(ast->u.for_stmt.range, indent + 1);
+      ast_print(ast->u.for_stmt.statements, indent + 1);
       break;
       // last_element
   }

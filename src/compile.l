@@ -39,7 +39,8 @@ NUMBER 								[0-9]*
 									return COMP;
 									}					
 
-
+".."						{yylval.value=atoi(yytext);
+									return RANGE;}
 "&&"						{}
 
 "||"						{}

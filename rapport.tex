@@ -1,8 +1,9 @@
-\documentclass[]{article}
+
+\documentclass[12pt]{report}
 
 \usepackage[french]{babel} % choix de la langue : anglais par défaut
 \usepackage[utf8]{inputenc} % choix de l'encodage des caractères : utile pour les accents
-
+\usepackage[T1]{fontenc} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math : les packages classiques : 
 \usepackage{amsmath} 
@@ -14,14 +15,20 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % graphique
-% \usepackage{graphicx} 
+\usepackage{graphicx} 
+\graphicspath{ {./img/} }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DOCUMENT
 
-\title{Simulation d’exécution de programmes parallèles}
-\author{Olga Pigareva} % optionnel
+\title{%
+Simulation d'exécution de programmes parallèles\\
+\large 
+Rapport intermédiaire de travail de recherche\\ 
+de Master en Informatique de l'Université de Strasbourg }
+\author{Olga Pigareva\\
+M1 SIL} % optionnel
 
 % \date est optionnel : par défaut, date du jour de compilation
 % \date{aujourd'hui} % date fixe
@@ -29,113 +36,95 @@
 
 \begin{document}
 
-\maketitle % indispensable
+\maketitle
 
 \tableofcontents % facultatif
 
 \newpage % permet de changer de page
 
-\section{Motivation}
+\section{La présentation de la problématique dans son contexte}
+
+\subsection{Introduction}
+Le sujet de mon travail d'étude et de recherche aborde une domaine très actuel dans le monde numérique, la programmation parallèle.
+La parallélisation de tâches et de processus permet d'augmenter la performance et faire l'exécution d'un programme beaucoup plus rapide. 
+C'est pourquoi la programmation parallèle reste un sujet très actuel, même si elle était inventée il y a déjà plusieurs années.\\
+
+La programmation parallèle comprend la résolution d'un problème simultanément par plusieurs processus.
+Cela implique l'utilisation d'un seul ressource par plusieurs processus, ce qui nécessite une synchronisation.
+De sa part, la synchronisation peut amener à un interblocage qui peut avoir les conséquences indésirables (catastrophiques) pour un programme. \\
+Mon travail fait partie d'une recherche visant à caractériser ces interblocages.\\
+Dans les parties suivantes, j'expliquerai ce que signifient ces termes.   
+%Cela implique Mais quand il y a plusieurs processus qui utilisent la même ressource, l'interblocage peut apparaître. Par exemple, si on a un processus attent un autre processus, qui de sa part attends le première processus. Le programme restera bloqué qui implique plusieurs problèmes. 
+%C'est pourquoi on cherche d'éviter et de reconnaître un interblocage le plus tôt possible.
+
+\subsection{Programmes parallèles}
+
+Les programmes parallèles permettent de créer les activités qui peuvent exécuter les instructions indépendamment. 
+Souvent ces activités ont besoin d'acceder aux mêmes ressources. 
+Pour ne pas avoir les résultats imprévus lors de modification de données par les processus différents, les ressources sont synchronisées. 
+Cela veut dire que les processus peuvent acceder les données chacun à son tour. 
+Pour attendre la libération de données ou la fin d'instructions d'un processus, un programme parallèle utilise les horloges qui sont les barrières de synchronisation.
+\newpage
+
+\subsection{Interblocage}
+
+Le problème d'interblocage apparaît quand chaque processus attends une autre à se terminer et finalement aucun peut acceder à la ressource.
+Par conséquence, le programme reste bloquer.\\
+Par exemple, sur la Figure 1, le processus P1 attends la fin de processus P2 pour acceder à R1 et P2, de sa part, attends la fin de P1 pour acceder à R2. Tous les deux processus restent bloquer.\\
+
+\begin{figure}[h]
+  \includegraphics[scale=0.2]{deadlock}
+  \centering
+  \caption{Exemple d'interblocage}
+  \centering
+\end{figure}
+
+Souvent pour les programmes avec plusieurs processus et plusieurs ressources, il est difficile de controller l'absence d'interblocages, surtout avec la liberté et puissance offertes par la synchronisation.
+D'où l'intérêt de reconnaître ces interblocages automatiquement le plus tôt possible, à savoir, éventuellement, lors de la compilation du programme.
+
+\newpage
+
 \subsection{Problème}
-On s'intéresse ici de l'exécution de programmes parallèles. Quand on a plusieurs activités, les interblocages peuvent survenir.
-Exemple.. un processus peut attendre la fin d'autre et l'inverse, alors le programme reste bloquer.
-Pour prévenir l'interblocage, l'idée est de pouvoir déterminer s'il y a l'interblocage lors de la compilation d'un code.
-plus précisément on s'intéresse à créer un compilateur simple qui va reconnaître juste les instructions qu'on a besoin (for, if, comparaison, affines)
-et également les instructions assync, finish, advance = barriere. On se donne un choix entre simuler une éxecution de programme paralléle et afficher un message si l'execution se bloquer
- ou iplementer les formules dans quadreplets de compilateur pour le dire direct si l'interblocage arrive lors de la compilation.
- L'atre idée et de visualiser les activités avec les barriéers.
 
-\subsection{Planning}
-21 - 27: installer X10 et essayer les programmes parallèles avec l'interblocage
- + écrire un compilateur avec if et for 
+Est-il possible de définir un interblocage pendant l'étape de compilation?
+
+ \subsection{Objectifs}
+
+ Pour répondre à cette question, l'idée est de commencer par créer une version simplifiée d'un langage parallèle en prenant un langage X10 comme un exemple.
+ Le compilateur doit reconnaître juste les instructions qu'on a besoin pour créer plusieurs activités parallèles (boucles, conditions, création de nouveaux processus et horloges).\\
  
-\section{Un peu de mise en forme}
-Le retour à la ligne\\
-doit être \newline
-demandé 
-explicitement.
+ Après avoir implémenté un langage qui permet de créer plusieurs activités parallèles avec la synchronisation, il doit être possible de visualiser l'état de toutes les activités au moment d'interblocages.
+  on se donne un choix entre simulation d'exécution de programmes parallèles et afficher un message si l'execution se bloquer
 
-Les lignes blanches ont une importance~: changement de paragraphe. \\
 
-Un retour à la ligne suivi d'une ligne blanche commence un paragraphe détaché.
+\section{La liste des tâches déjà effectuées}
 
-\noindent
-On peut supprimer l'indentation.\\ 
-On peut modifier le texte \textbf{Texte} \textit{Texte} \textsc{Text}.
-
-\section{Listes et compagnie}
+\subsection{Le travail réalisé}
 \begin{itemize}
- \item item 1
- \item item 2
- \item ...
+ \item Installation de librairies et IDE pour la langage de programmation \textbf{X10} sur mon ordinateur.\\ Premièrement, il fallait de préparer l'environnement de travail.
+ \item Lecture de documentation et plus de documents sur l'interblocage et programmes parallèles.
+ \item Exécution de différentes programmes test X10 pour comprendre le problème et voir comment il fonctionne. 
+ \item Implementation d'un compilateur inspiré par le langage X10 à l'aide de Lexer et parser (Lex et Yacc).
+ \item Génération d'un arbre de la syntaxe abstraite (AST en anglais).
 \end{itemize}
 
-\begin{enumerate}
- \item item 1
- \item item 2
- \item ...
-\end{enumerate}
+\newpage
 
+\section{Le planning prévisionnel des tâches à réaliser}
 \begin{description}
- \item[un mot] une définition 
- \item[un autre mot] une autre définition 
- \item[encore un] ... 
+  \item[mars] Implementation de simulation d'exécution du programme et captures de traces d'exécution.
+  \item[avril] Implementation de visualisation des traces d'execution ou de systèmes mathématique permettant détecter un interblocage.
+  \item[mai] Rédiger un rapport avec le bilan de résultats atteins.
 \end{description}
 
-\section{Les maths}
-\label{section math}
-Les équations peuvent être insérées dans le texte (exemple $x=2$), 
-y compris si elles sont grosses (exemple $\sum_{i=0}^n \frac{x^i}{i!}$),
-dans quel cas \texttt{displaystyle} peut servir (exemple $\displaystyle \sum_{i=0}^n \frac{x^i}{i!}$).
+\section{Il peut aussi contenir tout ce qui apparaîtra dans votre rapport final. }
 
-Elles peuvent être mises à part~:
-\begin{equation}
-a = \int_0^\infty f(u) du
-\end{equation}
-avec numérotation automatique
-\begin{equation} \label{equation de b}
-b = \iint f(t) dt
-\end{equation}
-ou sans numérotation~:
-\begin{equation*}
-c = \oint f(v) dv
-\end{equation*}
-
-\section{Les références}
-Les sections et les environnements numérotés peuvent être référencés automatiquement grâce aux \texttt{label} et \texttt{ref}~:
-les équations (\'Eq. \ref{equation de b} page \pageref{equation de b}), 
-les sections (section \ref{section math} page \pageref{section math}), 
-les environnements flottants.
-
-\section{Les environnements flottants}
-Ils permettent de placer automatiquement, d'ajouter des légendes et de référencer~: des tableaux (tab. \ref{mon tableau}), des figures, des algorithmes (Algo \ref{algo de redac}), etc.
-
-\begin{table}
-\begin{center}
-\begin{tabular}{r|c|l|}
- texte & texte & texte \\
-\hline
- texte plus long & texte plus long & texte plus long \\
-\hline
-\end{tabular}
-\end{center}
-\caption{je peux ajouter une légende \label{mon tableau}}
-\end{table}
-
-\begin{algorithm}
-\While{j'ai des choses à dire}{
-  je rédige \\
-  \While{j'ai des erreurs de compilation}{
-    je corrige mon code \LaTeX
-  }
-}
-\caption{rédaction d'un rapport \label{algo de redac}} 
-\end{algorithm}
+\section{Motivation}
 
 
-% \addcontentsline{toc}{section}{Références}
-% \bibliographystyle{alpha}
-% \bibliography{../biblio.bib}
+ \addcontentsline{toc}{section}{Références}
+ \bibliographystyle{alpha}
+ \bibliography{../biblio.bib}
 
 \end{document} 
 
