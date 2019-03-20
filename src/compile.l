@@ -14,6 +14,15 @@ NUMBER 								[0-9]*
 
 [()=+\-*,/\[\]{;}]				{ return yytext[0]; } 			
 
+"finish"						{yylval.string = strdup(yytext);
+									return FINISH;}
+
+"async"						{yylval.string = strdup(yytext);
+									return ASYNC;}	
+
+"advance"						{yylval.string = strdup(yytext);
+									return ADVANCE;}																
+
 "if"						{yylval.string = strdup(yytext);
 									return IF;}
 
