@@ -3,22 +3,7 @@
 #include <string.h>
 #include "ast.h"
 
-#include <assert.h>
 
-/*
-  * check if memory was allocated
-  * 
-*/
-void* check_alloc(size_t sz)
-{
-    void* result = malloc(sz);
-    if(!result)
-    {
-        printf("alloc failed\n");
-        exit(1);
-    }
-    return result;
-}
 /*
   * make expression node 
 */
@@ -51,21 +36,19 @@ ast* ast_new_assignment(char* name, ast* right){
 /*
   * make statement block node 
 */
-ast* ast_new_statements(ast* result, ast* stmt){
-
-  if(!result || result->type != statements_type)
-    {
-        result = check_alloc(sizeof(*result));
-        result->type = statements_type;
-        result->u.statements.count = 0;
-        result->u.statements.statements = 0;
-    } 
-    result->u.statements.count++;
-    result->u.statements.statements = realloc(result->u.statements.statements, result->u.statements.count*sizeof(*result->u.statements.statements));
-    result->u.statements.statements[result->u.statements.count-1] = stmt;
-    return result;
+ast* ast_new_statements(statements* list){
+ast* new = check_alloc(sizeof(ast));
+new->type = statements_type;
+new->u.statements = list;
+return new;
 }
 
+statements* new_statements(ast* stmt, statements* list){
+  statements *element = check_alloc(sizeof(statements));
+  element->stmt = stmt;
+  element->prec = list;
+  return element;
+}
 /*
   * make "for" node with range (i .. j), condition and statements as children
 */
@@ -120,41 +103,41 @@ ast* ast_new_number(int number) {
 
 ast* ast_new_id(char* id) {
   
-  ast* new = check_alloc(sizeof(ast));
+  ast* new = check_alloc(sizeof(* new));
   (new->u).id = check_alloc(strlen(id) + 1);
   strcpy( (new->u).id , id);
   new->type = id_type;
   return new;
 }
 
-ast* ast_new_parallel(char* op, char** clk, ast* stmts){
-  ast* new = check_alloc(sizeof(ast));
+ast* ast_new_parallel(char* op, clock** clk, ast* statements){
+  ast* new = check_alloc(sizeof(* new));
   if (!strcmp(op, "finish")){
     new->type = finish_type;
     new->u.finish_stmt.clocks = clk;
-    new->u.finish_stmt.stmt = stmts;
+    new->u.finish_stmt.stmt = statements;
   }
   else if (!strcmp(op, "assync")){
     new->type = assync_type;
-    new->u.assync_stmt.stmt = stmts;
+    new->u.assync_stmt.stmt = statements;
     new->u.assync_stmt.clocks = clk;
   }
   return new;
 }
 
-clock* new_clocks(clock* clks, clock* c){
+ast* ast_new_advance(char* id){
+  ast* new = check_alloc(sizeof(* new));
+  new->type = advance_type;
+  (new->u).advance = check_alloc(strlen(id) + 1);
+  strcpy( (new->u).advance , id);
+  return new;
+}
 
-  if(!clks)
-    {
-        clks = check_alloc(sizeof(struct clks*));
-        clks->clocks = check_alloc(sizeof(char*));
-        strcpy(result[size], id);
-        return result;
-    } 
-    for (size = 1; strcmp(result[size],"0")!=0 ; size++){}
-    result[size] = malloc(strlen(id)+1);
-    strcpy(result[size], id);
-    return result;
+static void statements_print(statements* statements, int indent){
+  if (statements != NULL){
+    statements_print(statements->prec, indent);
+    ast_print(statements->stmt, indent);
+  }
 }
 
 void ast_print(ast* ast, int indent) {
@@ -165,11 +148,11 @@ void ast_print(ast* ast, int indent) {
   switch (ast->type){
 
     case id_type :
-      printf("(%s)\n", ast->u.id);
+      printf("%s\n", ast->u.id);
       break;
 
     case number_type : 
-      printf("(%d)\n", ast->u.number);
+      printf("%d\n", ast->u.number);
       break;
 
     case operation_type :
@@ -190,9 +173,8 @@ void ast_print(ast* ast, int indent) {
       break;
 
     case statements_type :
-      printf("\n");
-      for (int i = 0; i < ast->u.statements.count; i++)
-        ast_print(ast->u.statements.statements[i], indent + 1);
+      printf("statements\n");
+      statements_print(ast->u.statements, indent);
       break;
 
     case if_type : 
@@ -217,6 +199,28 @@ void ast_print(ast* ast, int indent) {
       printf("range \n");
       ast_print(ast->u.range.left, indent + 1);
       ast_print(ast->u.range.right, indent + 1);
+      break;
+
+    case finish_type :
+      printf("finish\n");
+      ast_print(ast->u.finish_stmt.stmt, indent + 1);
+      for (int i=0; i<=indent;i++){
+        printf("    ");
+      }
+      print_clock(* ast->u.finish_stmt.clocks);
+      break;
+
+    case assync_type :
+      printf("assync\n");
+      ast_print(ast->u.assync_stmt.stmt, indent + 1);
+      for (int i=0; i<=indent;i++){
+        printf("    ");
+      }
+      print_clock(* ast->u.assync_stmt.clocks);
+      break;
+
+    case advance_type :
+      printf("advance %s\n", ast->u.advance);
       break;
   }
 }

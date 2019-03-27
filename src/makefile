@@ -1,8 +1,9 @@
-prefixe=compile
-FLAGS= -Wall -Wextra 
+prefixe = compile
+includes = ast.c liste.c semantic_check.c
+FLAGS = -Wall -Wextra 
 
 all: y.tab.o lex.yy.o
-	gcc y.tab.o lex.yy.o ast.c -ly -ll -o $(prefixe) $(FLAGS)
+	gcc y.tab.o lex.yy.o $(includes) -ly -ll -o $(prefixe) $(FLAGS)
 
 y.tab.o: $(prefixe).y
 	yacc -d $(prefixe).y

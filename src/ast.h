@@ -1,9 +1,22 @@
+#include "liste.h"
+
+typedef struct statements{             
+      struct ast * stmt;
+      struct statements * prec;
+    } statements;
+
 typedef struct ast {
 
-  enum {id_type, number_type, operation_type, assignment_type, while_type, for_type, range_type, statements_type, if_type, finish_type, assync_type} type;
+  enum {id_type, number_type, advance_type, operation_type, assignment_type, for_type, range_type, statements_type, if_type, finish_type, assync_type} type;
   union {
+
     int number;
+
     char* id;
+
+    statements * statements; //for a block of statements
+
+    char* advance;  //advance clock statement
 
     struct {             // for "expression" statements
       struct ast* left;
@@ -15,16 +28,6 @@ typedef struct ast {
       char*name;
       struct ast* right;
     } assignment;
-
-     struct {             //for a block of statements
-      int count;
-      struct ast** statements;
-      } statements;
-
-      struct {
-        struct ast* cond;
-        struct ast* statements;
-      } while_stmt;
 
       struct {              // for "for" statements
         char* iterator;
@@ -45,38 +48,27 @@ typedef struct ast {
       } if_stmt;
 
       struct {            // for "if/else" statements
-        char** clocks;
+        clock** clocks;
         struct ast* stmt;
       } finish_stmt;
 
       struct {            // for "if/else" statements
-        char** clocks;
+        clock** clocks;
         struct ast* stmt;
       } assync_stmt;
   } u;
 } ast;
 
-typedef struct {
-  char * name;
-  struct clock * next;
-} clock;
 
-typedef struct {
-  char* clocks;
-  size_t iter;
-  size_t cap;
-} list_of_clock;
-
-void* check_alloc(size_t sz);
 ast* ast_new_operation(char*, ast*, ast*);
 ast* ast_new_assignment(char*, ast*);
-ast* ast_new_statements(ast*, ast*);
-ast* ast_new_while(ast*, ast*);
+ast* ast_new_statements(statements*);
+statements* new_statements(ast*, statements*);
 ast* ast_new_for(char*, ast*, ast*);
 ast* ast_new_range(ast*, ast*);
 ast* ast_new_if(ast*, ast*, ast*);
 ast* ast_new_number(int);
+ast* ast_new_advance(char*);
 ast* ast_new_id(char*);
-ast* ast_new_parallel(char*, char**, ast*);
-clock* new_clocks(clock*, clock*);
+ast* ast_new_parallel(char*, clock**, ast*);
 void ast_print(ast*, int);

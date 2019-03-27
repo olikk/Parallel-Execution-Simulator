@@ -15,13 +15,13 @@
     void lex_free();
     extern FILE *yyin;
     extern FILE *yyout;
-
 %}
 
 %union {
   char* string;
   int value;
   struct ast* ast;
+  struct clock** clock;
 }
 
 %start program
@@ -29,9 +29,10 @@
 %token BLANK
 
 %type <ast> affine condition range
-%type <ast> stmt list_stmt block
+%type <ast> stmt block list_stmt
 %type <ast> program
-%type <string> clocks
+%type <clock> clocks
+%type <string> instruction
 
 %token <string> COMP RANGE
 %token <string> ID
@@ -47,34 +48,41 @@
 
 
 %%
-program: list_stmt                                  { printf("rendering AST\n"); ast_print($1, 0); (*(ast**)ast_result) = $1; }
+program: list_stmt                                  { printf("rendering AST\n"); (*(ast**)ast_result) = $1; }
     ;
+    
 stmt:
-        ID ';'                                      { printf("ID stmt\n"); $$ = ast_new_id($1); }
+        instruction ';'                             { printf("INSTRUCTION\n"); $$ = ast_new_id($1); }
     |   FOR ID '=' range block                      { printf("FOR stmt\n"); $$ = ast_new_for($2, $4, $5); }
     |   IF '(' condition ')' block                  { printf("IF stmt\n"); $$ = ast_new_if($3, $5, NULL); }
-    |   FINISH '(' clocks ')' block                         { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", $3, $5); }
-    |   ASYNC '(' clocks ')' block                         { printf("ASSYNC stmt\n"); $$ = ast_new_parallel("async", $3, $5); }
+    |   FINISH '(' clocks ')' block                 { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", $3, $5); }
+    |   ASYNC '(' clocks ')' block                  { printf("ASYNC stmt\n"); $$ = ast_new_parallel("async", $3, $5); }
+    |   ADVANCE ID ';'                              { printf("ADVANCE stmt\n"); $$ = ast_new_advance($2); }
+    ;
+
+instruction: ID 
     ;
 
 clocks: 
-        /*%empty*/          //creer une liste vide ?
-    |   ID ',' clocks                                {printf("CLOCKS\n"); $$ = new_clocks($3, $1);}
-    |   ID
+        /*%empty*/                                   { $$ = NULL; }
+    |   clocks ',' ID                                {printf("CLOCKS\n"); $$ = push_clock($1, $3);}
+    |   ID                                           {printf("FIRST CLOCK\n"); $$ = push_clock(NULL, $1);}
     ;
 
 block:
-        '{' list_stmt '}'                           { printf("block\n"); $$ = ast_new_statements(NULL, $2); }
+        '{' list_stmt '}'                           { printf("block\n"); $$ = $2;}
     |   stmt
     ;
 
 range: affine RANGE affine                          { printf("range\n"); $$ = ast_new_range($1, $3); }
     ;
 
-list_stmt: 
-         /*%empty*/  
-    |   list_stmt stmt                              { printf("stmt block\n"); $$ = ast_new_statements($1, $2); }
-    |   stmt
+list_stmt:
+        list_stmt stmt                              { printf("stmt block\n"); 
+                                                      $1->u.statements = new_statements($2, $1->u.statements);
+                                                      $$ = $1; 
+                                                    }
+    |   stmt                                        { printf("stmt\n"); $$ = ast_new_statements(new_statements($1,NULL));}
     ;
 
 affine:
@@ -109,5 +117,9 @@ int main( int argc, char **argv ) {
             exit(1);
         }
     }
-    return  yyparse(&a);
+
+    if (yyparse(&a) == 0) {  
+        ast_print(a,0);
+    }
+    return 0;
 }
