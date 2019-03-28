@@ -39,7 +39,7 @@ symbol * symbol_lookup (symbol * tab, char * id){
 }
 
 void semantic_check(ast* ast, symbol** tab){
-    if(node!=NULL){
+    if(ast!=NULL){
         switch (ast->type){
 
             case id_type :
@@ -62,7 +62,7 @@ void semantic_check(ast* ast, symbol** tab){
 
             case statements_type :
                 printf("statements\n");
-                statements_semantic_check(ast->u.statements);  // à faire!!!
+                //statements_semantic_check(ast->u.statements);  // à faire!!!
             break;
 
             case if_type : 
@@ -97,7 +97,7 @@ void semantic_check(ast* ast, symbol** tab){
 
             case assync_type :
             printf("assync\n");
-            ast_print(ast->u.assync_stmt.stmt, indent + 1);
+            semantic_check(ast->u.assync_stmt.stmt, tab);
             print_clock(* ast->u.assync_stmt.clocks);
             break;
 
@@ -108,7 +108,5 @@ void semantic_check(ast* ast, symbol** tab){
 
             default: break;
         }
-
-        semantic_check(node, tab){}
     }
 }
