@@ -51,13 +51,13 @@ void semantic_check(ast* ast, symbol** tab){
             break;
 
             case operation_type :
-                semantic_check(ast->u.operation.left);
-                semantic_check(ast->u.operation.right);
+                semantic_check(ast->u.operation.left, tab);
+                semantic_check(ast->u.operation.right, tab);
             break;
 
             case assignment_type :
                 printf("%s = \n", ast->u.assignment.name);
-                semantic_check(ast->u.operation.right);
+                semantic_check(ast->u.operation.right, tab);
             break;
 
             case statements_type :
@@ -67,11 +67,11 @@ void semantic_check(ast* ast, symbol** tab){
 
             case if_type : 
                 printf("if \n");
-                semantic_check(ast->u.if_stmt.cond);
+                semantic_check(ast->u.if_stmt.cond, tab);
             //printf("\n");
-                semantic_check(ast->u.if_stmt.if_branch);
+                semantic_check(ast->u.if_stmt.if_branch, tab);
                 if (ast->u.if_stmt.else_branch){
-                    semantic_check(ast->u.if_stmt.else_branch);
+                    semantic_check(ast->u.if_stmt.else_branch, tab);
                 }
             break;
 
@@ -79,36 +79,31 @@ void semantic_check(ast* ast, symbol** tab){
                 printf("for \n");
                 printf("    %s", ast->u.for_stmt.iterator);
                 printf("\n");
-                semantic_check(ast->u.for_stmt.range);
-                semantic_check(ast->u.for_stmt.statements);
+                semantic_check(ast->u.for_stmt.range, tab);
+                semantic_check(ast->u.for_stmt.statements, tab);
             break;
 
             case range_type : 
                 printf("range \n");
-                semantic_check(ast->u.range.left, indent + 1);
-                semantic_check(ast->u.range.right, indent + 1);
+                semantic_check(ast->u.range.left, tab);
+                semantic_check(ast->u.range.right, tab);
             break;
 
             case finish_type :
             printf("finish\n");
-            ast_print(ast->u.finish_stmt.stmt, indent + 1);
-            for (int i=0; i<=indent;i++){
-                printf("    ");
-            }
+            semantic_check(ast->u.finish_stmt.stmt, tab);
             print_clock(* ast->u.finish_stmt.clocks);
             break;
 
             case assync_type :
             printf("assync\n");
             ast_print(ast->u.assync_stmt.stmt, indent + 1);
-            for (int i=0; i<=indent;i++){
-                printf("    ");
-            }
             print_clock(* ast->u.assync_stmt.clocks);
             break;
 
             case advance_type :
-            printf("advance %s\n", ast->u.advance);
+            if (!symbol_lookup(*tab, ast->u.advance))
+                fprintf(stderr, "error: use of undeclared clock\n");
             break;
 
             default: break;

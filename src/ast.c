@@ -167,11 +167,6 @@ void ast_print(ast* ast, int indent) {
       ast_print(ast->u.operation.right, indent + 1);
       break;
 
-    case while_type :
-      printf("\n");
-      ast_print(ast->u.while_stmt.statements, indent + 1);
-      break;
-
     case statements_type :
       printf("statements\n");
       statements_print(ast->u.statements, indent);

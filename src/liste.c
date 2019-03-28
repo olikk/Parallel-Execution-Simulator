@@ -7,8 +7,7 @@
   * check if memory was allocated
   * 
 */
-void* check_alloc(size_t sz)
-{
+void* check_alloc(size_t sz){
     void* result = malloc(sz);
     if(!result)
     {
@@ -18,8 +17,7 @@ void* check_alloc(size_t sz)
     return result;
 }
 
-clock** push_clock(clock **c, char* id)
-{
+clock** push_clock(clock **c, char* id){
     
     clock *element = check_alloc(sizeof(clock));
     element->id = (char*)check_alloc(strlen(id) * sizeof(char));
@@ -38,8 +36,7 @@ clock** push_clock(clock **c, char* id)
     return c;
 }
 
-void print_clock(clock *c)
-{
+void print_clock(clock *c){
         while(c)
           {
              printf("%s ",c->id);

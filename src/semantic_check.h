@@ -8,4 +8,4 @@ typedef struct symbol{
 symbol** init_s();
 symbol * symbol_add (symbol **, char *, int);
 symbol * symbol_lookup (symbol *, char *);
-void semantic_check(ast*);
+void semantic_check(ast*, symbol** tab);
