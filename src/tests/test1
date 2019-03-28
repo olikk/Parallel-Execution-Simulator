@@ -1,0 +1,9 @@
+finish {
+    async {
+        for i = 1 .. 2
+            S1;
+        }
+        for j = 0 .. (i/2)
+            S2;
+    }
+} 

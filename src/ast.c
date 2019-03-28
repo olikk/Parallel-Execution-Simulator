@@ -117,10 +117,10 @@ ast* ast_new_parallel(char* op, clock** clk, ast* statements){
     new->u.finish_stmt.clocks = clk;
     new->u.finish_stmt.stmt = statements;
   }
-  else if (!strcmp(op, "assync")){
-    new->type = assync_type;
-    new->u.assync_stmt.stmt = statements;
-    new->u.assync_stmt.clocks = clk;
+  else if (!strcmp(op, "async")){
+    new->type = async_type;
+    new->u.async_stmt.stmt = statements;
+    new->u.async_stmt.clocks = clk;
   }
   return new;
 }
@@ -205,13 +205,13 @@ void ast_print(ast* ast, int indent) {
       print_clock(* ast->u.finish_stmt.clocks);
       break;
 
-    case assync_type :
-      printf("assync\n");
-      ast_print(ast->u.assync_stmt.stmt, indent + 1);
+    case async_type :
+      printf("async\n");
+      ast_print(ast->u.async_stmt.stmt, indent + 1);
       for (int i=0; i<=indent;i++){
         printf("    ");
       }
-      print_clock(* ast->u.assync_stmt.clocks);
+      print_clock(* ast->u.async_stmt.clocks);
       break;
 
     case advance_type :

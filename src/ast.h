@@ -7,7 +7,7 @@ typedef struct statements{
 
 typedef struct ast {
 
-  enum {id_type, number_type, advance_type, operation_type, assignment_type, for_type, range_type, statements_type, if_type, finish_type, assync_type} type;
+  enum {id_type, number_type, advance_type, operation_type, assignment_type, for_type, range_type, statements_type, if_type, finish_type, async_type} type;
   union {
 
     int number;
@@ -55,7 +55,7 @@ typedef struct ast {
       struct {            // for "if/else" statements
         clock** clocks;
         struct ast* stmt;
-      } assync_stmt;
+      } async_stmt;
   } u;
 } ast;
 

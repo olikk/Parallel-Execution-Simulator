@@ -38,19 +38,28 @@ symbol * symbol_lookup (symbol * tab, char * id){
     return NULL;
 }
 
-void semantic_check(ast* ast, symbol** tab){
+static void statements_semantic_check(statements* statements, symbol** tab){
+  if (statements != NULL){
+    statements_check(statements->prec, tab);
+    semantic_check(statements->stmt, tab);
+  }
+}
+
+int semantic_check(ast* ast, symbol** tab){
+    int return_code = 0;
     if(ast!=NULL){
         switch (ast->type){
 
             case id_type :
-            printf("%s\n", ast->u.id);
-            break;
-
-            case number_type : 
-            printf("%d\n", ast->u.number);
+                printf("id check\n");
+                if (!symbol_lookup(*tab, ast->u.id)){
+                    fprintf(stderr, "error: use of undeclared identifier \"%s\" \n", ast->u.id);
+                    return_code = 1;
+                }
             break;
 
             case operation_type :
+                printf("operation check\n");
                 semantic_check(ast->u.operation.left, tab);
                 semantic_check(ast->u.operation.right, tab);
             break;
@@ -61,14 +70,13 @@ void semantic_check(ast* ast, symbol** tab){
             break;
 
             case statements_type :
-                printf("statements\n");
-                //statements_semantic_check(ast->u.statements);  // à faire!!!
+                printf("statements check\n");
+                statements_semantic_check(ast->u.statements, tab);  
             break;
 
             case if_type : 
-                printf("if \n");
+                printf("if check\n");
                 semantic_check(ast->u.if_stmt.cond, tab);
-            //printf("\n");
                 semantic_check(ast->u.if_stmt.if_branch, tab);
                 if (ast->u.if_stmt.else_branch){
                     semantic_check(ast->u.if_stmt.else_branch, tab);
@@ -76,37 +84,70 @@ void semantic_check(ast* ast, symbol** tab){
             break;
 
             case for_type : 
-                printf("for \n");
-                printf("    %s", ast->u.for_stmt.iterator);
-                printf("\n");
+                printf("for check\n");
+                *tab = symbol_add(tab, ast->u.for_stmt.iterator, counter);
                 semantic_check(ast->u.for_stmt.range, tab);
                 semantic_check(ast->u.for_stmt.statements, tab);
             break;
 
             case range_type : 
-                printf("range \n");
+                printf("range check\n");
                 semantic_check(ast->u.range.left, tab);
                 semantic_check(ast->u.range.right, tab);
             break;
 
             case finish_type :
-            printf("finish\n");
-            semantic_check(ast->u.finish_stmt.stmt, tab);
-            print_clock(* ast->u.finish_stmt.clocks);
+                printf("finish check\n");
+                while(*(ast->u.finish_stmt.clocks){
+                    *tab = symbol_add(tab, *(ast->u.finish_stmt.clocks)->id, clock);
+                    *(ast->u.finish_stmt.clocks) = *(ast->u.finish_stmt.clocks) -> prec;
+                }
+                semantic_check(ast->u.finish_stmt.stmt, tab);
+            
             break;
 
-            case assync_type :
-            printf("assync\n");
-            semantic_check(ast->u.assync_stmt.stmt, tab);
-            print_clock(* ast->u.assync_stmt.clocks);
+            case async_type :
+                printf("async check\n");
+                if (ast->u.async_stmt.clocks != NULL){
+                    symbol** new_tab = NULL;
+                    *new_tab = (symbol *)malloc(sizeof(struct symbol));
+                    *new_tab = NULL;
+                    while(*(ast->u.async_stmt.clocks){
+                        // check if a clock exists
+                        if (symbol_lookup(*tab,  *(ast->u.async_stmt.clocks)->id)){
+                            //copy it to the new table
+                            *new_tab = symbol_add(new_tab, *(ast->u.async_stmt.clocks)->id, clock);
+                        } else {
+                            printf("error: use of undeclared clock \"%s\" in async\n",*(ast->u.async_stmt.clocks)->id );
+                            return_code = 1;
+                        }
+                        
+                        *(ast->u.async_stmt.clocks) = *(ast->u.async_stmt.clocks) -> prec;
+                    }
+                    //copy all counter symbols to the new table
+                    while (*tab != NULL){
+                        if ((*tab)->type == counter){
+                            *new_tab = symbol_add(new_tab, (*tab)->id, counter);
+                        }
+                        *tab = (*tab)->next;
+                    }
+                    //now original tab points to the new one
+                    tab = new_tab;
+
+                }
+                semantic_check(ast->u.async_stmt.stmt, tab);
             break;
 
             case advance_type :
-            if (!symbol_lookup(*tab, ast->u.advance))
-                fprintf(stderr, "error: use of undeclared clock\n");
+                printf("advance check\n");
+                if (!symbol_lookup(*tab, ast->u.advance)){
+                    fprintf(stderr, "error: use of undeclared clock \"%s\" in advance\n", ast->u.advance);
+                    return_code = 1;
+                }
             break;
 
             default: break;
         }
     }
+    return return_code;
 }

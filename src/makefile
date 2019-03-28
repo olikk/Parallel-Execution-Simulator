@@ -15,3 +15,16 @@ lex.yy.o: $(prefixe).l y.tab.h
 
 clean:
 	rm -f *.o y.tab.c y.tab.h lex.yy.c a.out $(prefixe)
+
+test1:
+	./compile test1 >> test_results
+	echo "end test1\n" >> test_results
+
+test2:
+	./compile test2 >> test_results
+
+test3:
+	./compile test3 >> test_results
+
+test : test1 test2 test 3
+	
