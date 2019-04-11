@@ -4,6 +4,7 @@
     #include <stdlib.h>
     #include <string.h>
     #include "ast.h"
+    #include "semantic_check.h"
     #define YYDEBUG 1
 
     /* Since the parser must return the AST, it must get a parameter where
@@ -21,7 +22,7 @@
   char* string;
   int value;
   struct ast* ast;
-  struct clock** clock;
+  struct clock* clock;
 }
 
 %start program
@@ -52,11 +53,13 @@ program: list_stmt                                  { printf("rendering AST\n");
     ;
     
 stmt:
-        instruction ';'                             { printf("INSTRUCTION\n"); $$ = ast_new_id($1); }
+        instruction ';'                             { printf("INSTRUCTION\n"); $$ = ast_new_basic($1); }
     |   FOR ID '=' range block                      { printf("FOR stmt\n"); $$ = ast_new_for($2, $4, $5); }
     |   IF '(' condition ')' block                  { printf("IF stmt\n"); $$ = ast_new_if($3, $5, NULL); }
     |   FINISH '(' clocks ')' block                 { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", $3, $5); }
+    |   FINISH block                                { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", NULL , $2); }
     |   ASYNC '(' clocks ')' block                  { printf("ASYNC stmt\n"); $$ = ast_new_parallel("async", $3, $5); }
+    |   ASYNC block                                 { printf("ASYNC stmt\n"); $$ = ast_new_parallel("async", NULL, $2); }
     |   ADVANCE ID ';'                              { printf("ADVANCE stmt\n"); $$ = ast_new_advance($2); }
     ;
 
@@ -120,6 +123,8 @@ int main( int argc, char **argv ) {
 
     if (yyparse(&a) == 0) {  
         ast_print(a,0);
+        if (semantic_check(a,NULL) == 1)
+            return 1;
     }
     return 0;
 }

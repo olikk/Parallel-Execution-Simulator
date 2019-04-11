@@ -1,5 +1,5 @@
 prefixe = compile
-includes = ast.c liste.c semantic_check.c
+includes = ast.c liste.c semantic_check.c quadgen.c
 FLAGS = -Wall -Wextra 
 
 all: y.tab.o lex.yy.o
@@ -17,14 +17,14 @@ clean:
 	rm -f *.o y.tab.c y.tab.h lex.yy.c a.out $(prefixe)
 
 test1:
-	./compile test1 >> test_results
-	echo "end test1\n" >> test_results
+	./compile tests/test1 >> tests/test_results
+	echo "end test1\n" >> tests/test_results
 
 test2:
-	./compile test2 >> test_results
+	./compile tests/test2 >> tests/test_results
 
 test3:
-	./compile test3 >> test_results
+	./compile tests/test3 >> tests/test_results
 
 test : test1 test2 test 3
 	

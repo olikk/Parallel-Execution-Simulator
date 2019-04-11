@@ -74,12 +74,12 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 20 "compile.y"
+#line 21 "compile.y"
 {
   char* string;
   int value;
   struct ast* ast;
-  struct clock** clock;
+  struct clock* clock;
 }
 /* Line 1529 of yacc.c.  */
 #line 86 "y.tab.h"

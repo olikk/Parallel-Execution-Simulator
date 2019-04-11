@@ -1,5 +1,5 @@
 finish (cl1,cl2) {
-    async cl1 {
+    async (cl1) {
         for i = 1 .. 2{
             S1;
             advance cl1;

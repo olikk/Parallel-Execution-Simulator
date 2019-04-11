@@ -5,5 +5,5 @@ typedef struct clock {
 } clock;
 
 void* check_alloc(size_t sz);
-clock** push_clock(clock**, char*);
+clock* push_clock(clock*, char*);
 void print_clock(clock *c);

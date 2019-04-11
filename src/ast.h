@@ -7,7 +7,7 @@ typedef struct statements{
 
 typedef struct ast {
 
-  enum {id_type, number_type, advance_type, operation_type, assignment_type, for_type, range_type, statements_type, if_type, finish_type, async_type} type;
+  enum {id_type, number_type, basic_type, advance_type, operation_type, assignment_type, for_type, range_type, statements_type, if_type, finish_type, async_type} type;
   union {
 
     int number;
@@ -47,13 +47,13 @@ typedef struct ast {
         struct ast* else_branch;
       } if_stmt;
 
-      struct {            // for "if/else" statements
-        clock** clocks;
+      struct {            // for "finish" statements
+        clock* clocks;
         struct ast* stmt;
       } finish_stmt;
 
-      struct {            // for "if/else" statements
-        clock** clocks;
+      struct {            // for "async" statements
+        clock* clocks;
         struct ast* stmt;
       } async_stmt;
   } u;
@@ -70,5 +70,6 @@ ast* ast_new_if(ast*, ast*, ast*);
 ast* ast_new_number(int);
 ast* ast_new_advance(char*);
 ast* ast_new_id(char*);
-ast* ast_new_parallel(char*, clock**, ast*);
+ast* ast_new_basic(char* );
+ast* ast_new_parallel(char*, clock*, ast*);
 void ast_print(ast*, int);

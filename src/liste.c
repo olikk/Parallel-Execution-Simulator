@@ -17,23 +17,14 @@ void* check_alloc(size_t sz){
     return result;
 }
 
-clock** push_clock(clock **c, char* id){
+clock* push_clock(clock *c, char* id){
     
     clock *element = check_alloc(sizeof(clock));
-    element->id = (char*)check_alloc(strlen(id) * sizeof(char));
+    element->id = (char*)check_alloc((strlen(id)+1) * sizeof(char));
     strcpy(element->id, id);
+    element->prec = c;
     
-    if (!c){
-            
-            c = check_alloc(sizeof(c));
-            *c = check_alloc(sizeof(c));
-            element->prec = NULL;
-        }else{ 
-            element->prec = *c;
-        }
-    *c = element;       /* Le pointeur pointe sur le dernier élément. */
-    
-    return c;
+    return element;
 }
 
 void print_clock(clock *c){
