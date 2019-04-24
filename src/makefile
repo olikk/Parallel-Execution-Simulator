@@ -1,6 +1,6 @@
 prefixe = compile
-includes = ast.c liste.c semantic_check.c quadgen.c
-FLAGS = -Wall -Wextra 
+includes = ast.c liste.c semantic_check.c codegen.c pile.c
+FLAGS = -Wall -Wextra -Werror 
 
 all: y.tab.o lex.yy.o
 	gcc y.tab.o lex.yy.o $(includes) -ly -ll -o $(prefixe) $(FLAGS)

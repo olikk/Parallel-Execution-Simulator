@@ -20,6 +20,7 @@ symbol * symbol_lookup (symbol * tab, char * id){
         }
         current = current->next;
     }
+    free(current);
     return NULL;
 }
 

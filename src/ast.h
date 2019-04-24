@@ -1,3 +1,6 @@
+#ifndef __AST_H
+#define __AST_H
+
 #include "liste.h"
 
 typedef struct statements{             
@@ -73,3 +76,5 @@ ast* ast_new_id(char*);
 ast* ast_new_basic(char* );
 ast* ast_new_parallel(char*, clock*, ast*);
 void ast_print(ast*, int);
+
+#endif

@@ -1,0 +1,5 @@
+finish (c1)
+    finish (c2)
+        S1;
+    async (c2) S1;
+    finish (c2) S2; 

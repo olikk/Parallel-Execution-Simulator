@@ -5,6 +5,7 @@
     #include <string.h>
     #include "ast.h"
     #include "semantic_check.h"
+    #include "codegen.h"
     #define YYDEBUG 1
 
     /* Since the parser must return the AST, it must get a parameter where
@@ -29,7 +30,7 @@
 %token WHILE FOR IF ELSE ELSEIF FINISH ASYNC ADVANCE
 %token BLANK
 
-%type <ast> affine condition range
+%type <ast> affine range
 %type <ast> stmt block list_stmt
 %type <ast> program
 %type <clock> clocks
@@ -55,7 +56,8 @@ program: list_stmt                                  { printf("rendering AST\n");
 stmt:
         instruction ';'                             { printf("INSTRUCTION\n"); $$ = ast_new_basic($1); }
     |   FOR ID '=' range block                      { printf("FOR stmt\n"); $$ = ast_new_for($2, $4, $5); }
-    |   IF '(' condition ')' block                  { printf("IF stmt\n"); $$ = ast_new_if($3, $5, NULL); }
+    |   IF '(' affine ')' block                     { printf("IF stmt\n"); $$ = ast_new_if($3, $5, NULL); }
+    |   IF '(' affine ')' block ELSE block          { printf("IF ELSE stmt\n"); $$ = ast_new_if($3, $5, $7); }
     |   FINISH '(' clocks ')' block                 { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", $3, $5); }
     |   FINISH block                                { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", NULL , $2); }
     |   ASYNC '(' clocks ')' block                  { printf("ASYNC stmt\n"); $$ = ast_new_parallel("async", $3, $5); }
@@ -93,14 +95,13 @@ affine:
     |   affine '-' affine                           { $$ = ast_new_operation("-", $1, $3); }
     |   affine '/' affine                           { $$ = ast_new_operation("/", $1, $3); }
     |   affine '*' affine                           { $$ = ast_new_operation("*", $1, $3); }
+    |   affine COMP affine                          { $$ = ast_new_operation($2, $1, $3); }
     | '(' affine ')'                                { $$ = $2; }
     | ID                                            { $$ = ast_new_id($1); }
     | NUMBER                                        { $$ = ast_new_number($1); }
     ;
 
-condition:
-        affine COMP affine                          { $$ = ast_new_operation($2, $1, $3); }
-    ;
+
 
 %%
 
@@ -123,8 +124,18 @@ int main( int argc, char **argv ) {
 
     if (yyparse(&a) == 0) {  
         ast_print(a,0);
-        if (semantic_check(a,NULL) == 1)
+        if (semantic_check(a,NULL) == 1){
             return 1;
-    }
+        }
+        printf("starting code generation\n");
+        code* codelist = ast_to_code(a, NULL);
+        printf("code generation done\n");
+        if (codelist != NULL){
+            printf("starting code print\n");
+            code_print(codelist);
+            printf("end code print\n");
+        }else 
+            printf("error: empty code list\n");
+    } else return 1;
     return 0;
 }
