@@ -88,10 +88,12 @@ int semantic_check(ast* ast, symbol* tab){
 
             case finish_type :
                 printf("finish check\n");
-                while(ast->u.finish_stmt.clocks){
-                    tab = symbol_add(tab, ((ast->u.finish_stmt.clocks))->id, clock_type);
-                    ast->u.finish_stmt.clocks = ast->u.finish_stmt.clocks->prec;
+                clock* temp = ast->u.finish_stmt.clocks;
+                while(temp){
+                    tab = symbol_add(tab, temp->id, clock_type);
+                    temp = temp->prec;
                 }
+                //free(temp);
                 semantic_check(ast->u.finish_stmt.stmt, tab);
             
             break;
@@ -99,23 +101,19 @@ int semantic_check(ast* ast, symbol* tab){
             case async_type :
                 printf("async check\n");
                 symbol* new_tab = NULL;
-
-                if (ast->u.async_stmt.clocks != NULL){
-                    
-                    while(ast->u.async_stmt.clocks){
+                clock* temp = ast->u.async_stmt.clocks;
+                while(temp != NULL){
                         // check if a clock exists
-                        if (symbol_lookup(tab,  ast->u.async_stmt.clocks->id)){
-                            //copy it to the new table
-                            new_tab = symbol_add(new_tab, ast->u.async_stmt.clocks->id, clock_type);
-                        } else {
-                            printf("error: use of undeclared clock \"%s\" in async\n",ast->u.async_stmt.clocks->id );
-                            return_code = 1;
-                        }
-                        
-                        ast->u.async_stmt.clocks = ast->u.async_stmt.clocks->prec;
-                    }
-
+                    if (symbol_lookup(tab,  temp->id)){
+                        //copy it to the new table
+                        new_tab = symbol_add(new_tab, temp->id, clock_type);
+                    } else {
+                        printf("error: use of undeclared clock \"%s\" in async\n",temp->id );
+                        return_code = 1;
+                    }   
+                    temp = temp->prec;
                 }
+                //free(temp);
                 //copy all counter symbols to the new table
                 while (tab != NULL){
                     if (tab->type == counter_type){

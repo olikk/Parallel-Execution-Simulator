@@ -71,23 +71,23 @@ code* ast_to_code(ast* ast, code* codelist) {
       }
         
       else if (strcmp(ast->u.operation.op, "-") == 0)
-        stack = push(stack, pop(stack) - pop(stack));
+        stack = push(stack, (pop(stack) - pop(stack)));
       else if (strcmp(ast->u.operation.op, "/") == 0)
-        stack = push(stack, pop(stack) / pop(stack));
+        stack = push(stack, (pop(stack) / pop(stack)));
       else if (strcmp(ast->u.operation.op, "*") == 0)
-        stack = push(stack, pop(stack) * pop(stack));
+        stack = push(stack, (pop(stack) * pop(stack)));
       else if (strcmp(ast->u.operation.op, ">") == 0)
-        stack = push(stack, pop(stack) > pop(stack));
+        stack = push(stack, (pop(stack) > pop(stack)));
       else if (strcmp(ast->u.operation.op, ">") == 0)
-        stack = push(stack, pop(stack) < pop(stack));
+        stack = push(stack, (pop(stack) < pop(stack)));
       else if (strcmp(ast->u.operation.op, ">=") == 0)
-        stack = push(stack, pop(stack) >= pop(stack));
+        stack = push(stack, (pop(stack) >= pop(stack)));
       else if (strcmp(ast->u.operation.op, "<=") == 0)
-        stack = push(stack, pop(stack) <= pop(stack));
+        stack = push(stack, (pop(stack) <= pop(stack)));
       else if (strcmp(ast->u.operation.op, "==") == 0)
-        stack = push(stack, pop(stack) == pop(stack));
+        stack = push(stack, (pop(stack) == pop(stack)));
       else if (strcmp(ast->u.operation.op, "!=") == 0)
-        stack = push(stack, pop(stack) != pop(stack));
+        stack = push(stack, (pop(stack) != pop(stack)));
       break;
 
     case assignment_type :
@@ -101,8 +101,8 @@ code* ast_to_code(ast* ast, code* codelist) {
 
     case if_type : 
       printf("if code\n");
-      //codelist = ast_to_code(ast->u.if_stmt.cond, codelist);
-      codelist = code_add(codelist, code_gen(code_num++,"EVAL", "test", 0));
+      codelist = ast_to_code(ast->u.if_stmt.cond, codelist);
+      codelist = code_add(codelist, code_gen(code_num++,"EVAL", NULL , pop(stack)));
       code* if_code = code_gen(code_num++,"IFTRUE", "GOTO", 0);
       codelist = code_add(codelist, if_code);
       codelist = ast_to_code(ast->u.if_stmt.else_branch, codelist);
@@ -148,7 +148,7 @@ code* ast_to_code(ast* ast, code* codelist) {
       if (ast->u.finish_stmt.clocks != NULL) printf("async id: %s", ast->u.finish_stmt.clocks->id);
       else printf("null value\n");
       while(clock_finish != NULL){
-        codelist = code_add(codelist, code_gen(code_num++,"CLOCK_CREATE", clock_finish->id , 0)); //??
+        codelist = code_add(codelist, code_gen(code_num++,"CLOCK_CREATE", clock_finish->id , 0)); // clock id or clock number ?
         clock_finish = clock_finish->prec;
       }
       codelist = ast_to_code(ast->u.finish_stmt.stmt, codelist);
@@ -164,7 +164,6 @@ code* ast_to_code(ast* ast, code* codelist) {
       if (ast->u.async_stmt.clocks != NULL) printf("async id: %s", ast->u.async_stmt.clocks->id);
       else printf("null value\n");
       while(ca != NULL){
-        
         codelist = code_add(codelist, code_gen(code_num++,"CLOCK_REGISTER", ca->id , 0)); //??
         ca = ca->prec;
       }
