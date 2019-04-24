@@ -158,7 +158,7 @@ code* ast_to_code(ast* ast, code* codelist) {
 
     case async_type :
       printf("async code\n");
-      code* suite = code_gen(code_num++,"ASYNC SUITE", "GOTO" , 0);
+      code* suite = code_gen(code_num++,"ASYNC_SUITE", "GOTO" , 0);
       codelist = code_add(codelist, suite);
       clock* ca = ast->u.async_stmt.clocks; 
       if (ast->u.async_stmt.clocks != NULL) printf("async id: %s", ast->u.async_stmt.clocks->id);

@@ -1,16 +1,13 @@
 #ifndef EXEC_H
 #define EXEC_H
 
-struct ast;
-struct exec_env;
+typedef struct state{
+    //pile de compteurs de boucle englobants 
+    //une reference aux clocks accesibles (entrants)
+    //une reference au finish englobant le plus proche
+    //une pile par l'evaluation des expression (eval) ?deja en ast_to_code
+} state;
 
-/* creates the execution engine */
-struct exec_env* create_vm();
-
-/* removes the ExecEnviron */
-void free_env(struct exec_env* e);
-
-/* executes an AST */
-void exec_ast(struct exec_env* e, ast* a);
+state* exec_code(code*);
 
 #endif
