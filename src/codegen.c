@@ -33,6 +33,16 @@ code* code_add( code* codelist, code* code) {
     return codelist;
 }
 
+//search code structure knowing label number
+code* goto_code(code* codelist, int label){
+  code* temp = codelist;
+  while (temp!=NULL){
+    if (temp->label == label)
+      return temp;
+    temp = temp->next;
+  }
+  return temp;
+}
 
 static code* statements_to_code(statements* statements, code* codelist){
   if (statements != NULL){
@@ -66,7 +76,7 @@ code* ast_to_code(ast* ast, code* codelist) {
       codelist = ast_to_code(ast->u.operation.left, codelist);
       printf("start compare oper\n");
       if (strcmp(ast->u.operation.op, "+") == 0){
-        stack = push(stack, (pop(stack) + pop(stack));
+        stack = push(stack, (pop(stack) + pop(stack)));
         printf("pass firts +\n");
       }
         
@@ -101,16 +111,19 @@ code* ast_to_code(ast* ast, code* codelist) {
 
     case if_type : 
       printf("if code\n");
+      code* if_code=NULL, else_code=NULL;
       codelist = ast_to_code(ast->u.if_stmt.cond, codelist);
       codelist = code_add(codelist, code_gen(code_num++,"EVAL", NULL , pop(stack)));
       code* if_code = code_gen(code_num++,"IFTRUE", "GOTO", 0);
       codelist = code_add(codelist, if_code);
-      codelist = ast_to_code(ast->u.if_stmt.else_branch, codelist);
-      code* else_code = code_gen(code_num++,"ENDELSE", "GOTO", 0);
-      codelist = code_add(codelist, else_code);
+      if (ast->u.if_stmt.else_branch != NULL){
+        codelist = ast_to_code(ast->u.if_stmt.else_branch, codelist);
+        else_code = code_gen(code_num++,"ENDELSE", "GOTO", 0);
+        codelist = code_add(codelist, else_code);
+      }
       if_code->goto_label = code_num;
       codelist = ast_to_code(ast->u.if_stmt.if_branch, codelist);
-      else_code->goto_label = code_num;
+      if (else_code != NULL) else_code->goto_label = code_num;
       printf("end of if\n");
       break;
 

@@ -15,7 +15,7 @@ typedef struct code{
 
 code* code_gen(int label, char* op, char* arg1, int arg2);
 code* code_add(code* codelist, code* code);
-
+code* goto_code(code* codelist, int label);
 code* ast_to_code(ast* a, code* codelist);
 void code_print(code* codelist);
 
