@@ -1,5 +1,5 @@
 prefixe = compile
-includes = ast.c liste.c semantic_check.c codegen.c pile.c
+includes = ast.c semantic_check.c codegen.c pile.c exec.c
 FLAGS = -Wall -Wextra -Werror 
 
 all: y.tab.o lex.yy.o

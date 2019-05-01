@@ -16,9 +16,11 @@ pile* new_node(int num){
 }
 
 pile* push(pile* root, int num) { 
+
     pile* node = new_node(num); 
     node->next = root; 
     root = node; 
+    printf("value pushed\n");
     return root;
 } 
 
@@ -31,7 +33,7 @@ int pop(pile* root) {
     pile* temp = root; 
     root = root->next; 
     int popped = temp->num; 
-    free(temp); 
+    //free(temp); 
   
     return popped; 
 }

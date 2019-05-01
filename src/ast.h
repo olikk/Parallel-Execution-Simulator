@@ -1,12 +1,16 @@
 #ifndef __AST_H
 #define __AST_H
-
-#include "liste.h"
+#include <stdlib.h>
 
 typedef struct statements{             
       struct ast * stmt;
       struct statements * prec;
     } statements;
+
+typedef struct clock {
+  char * id;
+  struct clock * prec;
+} clock;
 
 typedef struct ast {
 
@@ -62,6 +66,9 @@ typedef struct ast {
   } u;
 } ast;
 
+void* check_alloc(size_t sz);
+clock* push_clock(clock*, char*);
+void print_clock(clock *c);
 
 ast* ast_new_operation(char*, ast*, ast*);
 ast* ast_new_assignment(char*, ast*);
@@ -75,6 +82,7 @@ ast* ast_new_advance(char*);
 ast* ast_new_id(char*);
 ast* ast_new_basic(char* );
 ast* ast_new_parallel(char*, clock*, ast*);
+
 void ast_print(ast*, int);
 
 #endif

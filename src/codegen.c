@@ -74,30 +74,7 @@ code* ast_to_code(ast* ast, code* codelist) {
       printf("operation code\n");
       codelist = ast_to_code(ast->u.operation.right, codelist);
       codelist = ast_to_code(ast->u.operation.left, codelist);
-      printf("start compare oper\n");
-      if (strcmp(ast->u.operation.op, "+") == 0){
-        stack = push(stack, (pop(stack) + pop(stack)));
-        printf("pass firts +\n");
-      }
-        
-      else if (strcmp(ast->u.operation.op, "-") == 0)
-        stack = push(stack, (pop(stack) - pop(stack)));
-      else if (strcmp(ast->u.operation.op, "/") == 0)
-        stack = push(stack, (pop(stack) / pop(stack)));
-      else if (strcmp(ast->u.operation.op, "*") == 0)
-        stack = push(stack, (pop(stack) * pop(stack)));
-      else if (strcmp(ast->u.operation.op, ">") == 0)
-        stack = push(stack, (pop(stack) > pop(stack)));
-      else if (strcmp(ast->u.operation.op, ">") == 0)
-        stack = push(stack, (pop(stack) < pop(stack)));
-      else if (strcmp(ast->u.operation.op, ">=") == 0)
-        stack = push(stack, (pop(stack) >= pop(stack)));
-      else if (strcmp(ast->u.operation.op, "<=") == 0)
-        stack = push(stack, (pop(stack) <= pop(stack)));
-      else if (strcmp(ast->u.operation.op, "==") == 0)
-        stack = push(stack, (pop(stack) == pop(stack)));
-      else if (strcmp(ast->u.operation.op, "!=") == 0)
-        stack = push(stack, (pop(stack) != pop(stack)));
+      
       break;
 
     case assignment_type :
@@ -111,19 +88,18 @@ code* ast_to_code(ast* ast, code* codelist) {
 
     case if_type : 
       printf("if code\n");
-      code* if_code=NULL, else_code=NULL;
       codelist = ast_to_code(ast->u.if_stmt.cond, codelist);
       codelist = code_add(codelist, code_gen(code_num++,"EVAL", NULL , pop(stack)));
-      code* if_code = code_gen(code_num++,"IFTRUE", "GOTO", 0);
-      codelist = code_add(codelist, if_code);
+      code* else_code = code_gen(code_num++,"IFFALSE", "GOTO", 0);
+      codelist = code_add(codelist, else_code);
+      codelist = ast_to_code(ast->u.if_stmt.if_branch, codelist);
+      code* end_if_code = code_gen(code_num++,"ENDIF", "GOTO", 0);
+      codelist = code_add(codelist, end_if_code);
+      else_code->goto_label = code_num;
       if (ast->u.if_stmt.else_branch != NULL){
         codelist = ast_to_code(ast->u.if_stmt.else_branch, codelist);
-        else_code = code_gen(code_num++,"ENDELSE", "GOTO", 0);
-        codelist = code_add(codelist, else_code);
       }
-      if_code->goto_label = code_num;
-      codelist = ast_to_code(ast->u.if_stmt.if_branch, codelist);
-      if (else_code != NULL) else_code->goto_label = code_num;
+      end_if_code->goto_label = code_num;
       printf("end of if\n");
       break;
 
@@ -139,9 +115,12 @@ code* ast_to_code(ast* ast, code* codelist) {
       code* if_false = code_gen(code_num++,"IFFALSE", "GOTO", 0);
       codelist = code_add(codelist, if_false);
       codelist = ast_to_code(ast->u.for_stmt.statements, codelist);
+      printf("interator %s\n", ast->u.for_stmt.iterator);
+      code_print(codelist);
       codelist = code_add(codelist, code_gen(code_num++,"INC",ast->u.for_stmt.iterator , 0));  
       //repeat loop
       code* jump_start = code_gen(code_num++,"LOOP", "GOTO", 0);
+      
       codelist = code_add(codelist, jump_start);
       jump_start->goto_label = start_loop_label;
       if_false->goto_label = code_num;

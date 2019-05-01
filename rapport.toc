@@ -1,0 +1,13 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}La pr\IeC {\'e}sentation de la probl\IeC {\'e}matique dans son contexte}{3}
+\contentsline {subsection}{\numberline {1.1}Introduction}{3}
+\contentsline {subsection}{\numberline {1.2}Programmes parall\IeC {\`e}les}{3}
+\contentsline {subsection}{\numberline {1.3}Interblocage}{4}
+\contentsline {subsection}{\numberline {1.4}Probl\IeC {\`e}me et objectifs}{5}
+\contentsline {section}{\numberline {2}La liste des t\IeC {\^a}ches d\IeC {\'e}j\IeC {\`a} effectu\IeC {\'e}es}{6}
+\contentsline {subsection}{\numberline {2.1}Le travail r\IeC {\'e}alis\IeC {\'e}}{6}
+\contentsline {section}{\numberline {3}Le planning pr\IeC {\'e}visionnel des t\IeC {\^a}ches \IeC {\`a} r\IeC {\'e}aliser}{6}
+\contentsline {section}{\numberline {4}Choix d'impl\IeC {\'e}mentation et diff\IeC {\'e}rentes \IeC {\'e}tapes}{7}
+\contentsline {subsection}{\numberline {4.1}Grammaire}{7}
+\contentsline {subsection}{\numberline {4.2}G\IeC {\'e}n\IeC {\'e}ration du code interm\IeC {\'e}diaire}{8}
+\contentsline {section}{R\IeC {\'e}f\IeC {\'e}rences}{9}

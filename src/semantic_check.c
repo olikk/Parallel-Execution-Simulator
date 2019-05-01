@@ -88,12 +88,12 @@ int semantic_check(ast* ast, symbol* tab){
 
             case finish_type :
                 printf("finish check\n");
-                clock* temp = ast->u.finish_stmt.clocks;
-                while(temp){
-                    tab = symbol_add(tab, temp->id, clock_type);
-                    temp = temp->prec;
+                clock* t = ast->u.finish_stmt.clocks;
+                while(t){
+                    tab = symbol_add(tab, t->id, clock_type);
+                    t = t->prec;
                 }
-                //free(temp);
+                //free(t);
                 semantic_check(ast->u.finish_stmt.stmt, tab);
             
             break;

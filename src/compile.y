@@ -6,6 +6,7 @@
     #include "ast.h"
     #include "semantic_check.h"
     #include "codegen.h"
+    #include "exec.h"
     #define YYDEBUG 1
 
     /* Since the parser must return the AST, it must get a parameter where
@@ -131,9 +132,14 @@ int main( int argc, char **argv ) {
         code* codelist = ast_to_code(a, NULL);
         printf("code generation done\n");
         if (codelist != NULL){
-            printf("starting code print\n");
+            printf("\nstarting code print\n");
             code_print(codelist);
-            printf("end code print\n");
+            printf("end code print\n\n");
+            state* program_state = check_alloc(sizeof(struct state));
+            program_state->ready_activities = add_ready(program_state->ready_activities,add_activity(program_state->ready_activities->activity, 0, NULL) );
+            printf("starting code execution\n");
+            run(codelist, program_state);
+            print_state(program_state );
         }else 
             printf("error: empty code list\n");
     } else return 1;

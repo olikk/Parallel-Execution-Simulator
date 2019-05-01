@@ -1,11 +1,15 @@
-
 \documentclass[12pt]{scrartcl}
 \usepackage[margin=1.2in]{geometry}
 \usepackage[french]{babel} % choix de la langue : anglais par défaut
 \usepackage[utf8]{inputenc} % choix de l'encodage des caractères : utile pour les accents
 \usepackage[T1]{fontenc} 
 \usepackage{fancyhdr}
+\usepackage{listings}
 
+\lstset{
+  xleftmargin=3em,
+  literate={->}{$\rightarrow$}{2}
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math : les packages classiques : 
 \usepackage{amsmath} 
@@ -137,6 +141,74 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
 
 \newpage
 
+\section{Choix d'implémentation et différentes étapes}
+
+\subsection{Grammaire}
+\begin{lstlisting}
+  program -> list_stmt
+
+  stmt -> instruction ';' 
+          |   FOR ID '=' range block 
+          |   IF '(' affine ')' block  
+          |   IF '(' affine ')' block ELSE block
+          |   FINISH '(' clocks ')' block
+          |   FINISH block
+          |   ASYNC '(' clocks ')' block
+          |   ASYNC block
+          |   ADVANCE ID ';'
+
+  list_stmt -> list_stmt stmt | stmt
+
+  instruction -> ID
+
+  clocks -> /*empty*/
+          |   clocks ',' ID
+          |   ID
+
+  block -> \{' list_stmt '\}'
+          |   stmt
+
+  range -> affine RANGE affine
+
+  affine -> affine '+' affine
+    |   affine '-' affine
+    |   affine '/' affine
+    |   affine '*' affine
+    |   affine COMP affine
+    | '(' affine ')'
+    | ID
+    | NUMBER
+\end{lstlisting}
+
+\newpage
+
+\subsection{Génération du code intermédiaire}
+\begin{description}
+  \item[EVAL]
+
+  \item[FINISH]
+  - créer une nouvelle structure finish
+  - la rajouter dans une pile de finish de l'activité en cours
+
+  \item[CLOCK_CREATE]
+  - créer une nouvelle structure clock
+  - ajouter l'activité en cours dans la pile 'registered' régistré avec ce clock
+  - rajouter ce clock dans une pile de clocks de l'activité en cours
+  - rajouter ce clock dans une pile de clocks de finish de l'activité en cours
+
+  \item[END_FINISH]:
+  - 
+  \item[ASYNC_SUITE]: 
+  //goto
+  - modifier le compteur du programme sur la ligne marquée dans le code
+  \item[CLOCK_REGISTER]:
+  - rajouter le clock dans une pile de clocks de l'activité en cours
+  - ajouter l'activité en cours dans la pile 'registered'  régistré avec ce clock
+  \item [END_ASYNC]   
+  \item [ADVANCE]
+\end{description}
+
+\newpage      
 \begin{thebibliography}{9}
   \bibitem{sujet} 
   Alain Ketterlin.

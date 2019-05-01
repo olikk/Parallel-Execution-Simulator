@@ -2,5 +2,6 @@ finish (cl1,cl2) {
     async (cl1) {
         S1;
     }
+    advance cl1;
     S2;
 }
