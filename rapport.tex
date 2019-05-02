@@ -4,6 +4,8 @@
 \usepackage[utf8]{inputenc} % choix de l'encodage des caractères : utile pour les accents
 \usepackage[T1]{fontenc} 
 \usepackage{fancyhdr}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Grammaire :
 \usepackage{listings}
 
 \lstset{
@@ -51,10 +53,11 @@ M1 SIL} % optionnel
 
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents % facultatif
 
 \newpage % permet de changer de page
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{La présentation de la problématique dans son contexte}
 
 \subsection{Introduction}
@@ -69,7 +72,7 @@ Mon travail fait partie d'une recherche visant à caractériser ces interblocage
 Dans les parties suivantes, j'expliquerai ce que signifient ces termes.   
 %Cela implique Mais quand il y a plusieurs processus qui utilisent la même ressource, l'interblocage peut apparaître. Par exemple, si on a un processus attent un autre processus, qui de sa part attends le première processus. Le programme restera bloqué qui implique plusieurs problèmes. 
 %C'est pourquoi on cherche d'éviter et de reconnaître un interblocage le plus tôt possible.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Programmes parallèles}
 
 Les programmes parallèles permettent de créer les activités qui peuvent exécuter les instructions indépendamment. 
@@ -78,7 +81,7 @@ Pour ne pas avoir les résultats imprévus lors de modification de données par 
 Cela veut dire que les processus peuvent acceder aux données chacun à son tour. 
 Pour attendre la libération de données ou la fin d'instructions d'un processus, un programme parallèle utilise les horloges qui sont les barrières de synchronisation.
 \newpage
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Interblocage}
 
 Le problème d'interblocage apparaît quand chaque processus attend un autre pour se terminer et finalement aucun peut acceder à la ressource.
@@ -97,7 +100,7 @@ Souvent pour les programmes avec plusieurs processus et plusieurs ressources, il
 D'où l'intérêt de reconnaître ces interblocages automatiquement le plus tôt possible, à savoir, éventuellement, lors de la compilation du programme.
 
 \newpage
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Problème et objectifs}
 
 Est-il possible de définir un interblocage pendant l'étape de compilation?\\
@@ -117,7 +120,7 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
  Pour cela, il faut créer une machine virtuelle qui va être capable de simuler l'exécution de programmes parallèles et donner une liste d'activités. \\
 
  \newpage
- 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{La liste des tâches déjà effectuées}
 
 \subsection{Le travail réalisé}
@@ -130,7 +133,7 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
 \end{itemize}
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Le planning prévisionnel des tâches à réaliser}
 \begin{description}
   \item[mars] Implémentation de la simulation d'exécution du programme et captures de traces d'exécution.
@@ -140,7 +143,7 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
 
 
 \newpage
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Choix d'implémentation et différentes étapes}
 
 \subsection{Grammaire}
@@ -181,7 +184,7 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
 \end{lstlisting}
 
 \newpage
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Génération du code intermédiaire}
 \begin{description}
   \item[EVAL]
@@ -209,6 +212,7 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
 \end{description}
 
 \newpage      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{thebibliography}{9}
   \bibitem{sujet} 
   Alain Ketterlin.
@@ -232,4 +236,4 @@ Est-il possible de définir un interblocage pendant l'étape de compilation?\\
  \bibliographystyle{alpha}
 
 \end{document} 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
