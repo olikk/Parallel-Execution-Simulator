@@ -43,7 +43,7 @@ NUMBER 								[0-9]*
 {NUMBER}					{yylval.value=atoi(yytext);
 									return NUMBER;}
 
-">"|"<"|"=<"|">="|"=="|"!="		{yylval.string = strdup(yytext);
+">"|"<"|"<="|">="|"=="|"!="		{yylval.string = strdup(yytext);
 									return COMP;
 									}					
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.2.12)  1 MAY 2019 21:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.2.12)  12 MAY 2019 22:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -484,80 +484,122 @@ Package: fancyhdr 2016/09/06 3.8 Extensive control of page headers and footers
 \f@ncyO@erf=\skip66
 \f@ncyO@olf=\skip67
 \f@ncyO@orf=\skip68
+) (/usr/local/texlive/2017/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+) (/usr/local/texlive/2017/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2011/09/28 v3.5.2 Customized lists
+\labelindent=\skip69
+\enit@outerparindent=\dimen114
+\enit@toks=\toks22
+\enit@inbox=\box28
+\enitdp@description=\count99
+) (/usr/local/texlive/2017/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+ (/usr/local/texlive/2017/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+ (/usr/local/texlive/2017/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen115
+\captionmargin@=\dimen116
+\captionwidth=\dimen117
+\caption@tempdima=\dimen118
+\caption@indent=\dimen119
+\caption@parindent=\dimen120
+\caption@hangindent=\dimen121
+Package caption Info: The definition of \@makecaption has been changed,
+(caption)             frenchb will NOT customize it.
+)
+Package caption Info: KOMA-Script document class.
+\c@ContinuedFloat=\count100
+)
+\c@KVtest=\count101
+\sf@farskip=\skip70
+\sf@captopadj=\dimen122
+\sf@capskip=\skip71
+\sf@nearskip=\skip72
+\c@subfigure=\count102
+\c@subfigure@save=\count103
+\c@lofdepth=\count104
+\c@subtable=\count105
+\c@subtable@save=\count106
+\c@lotdepth=\count107
+\sf@top=\skip73
+\sf@bottom=\skip74
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count99
-\lst@gtempboxa=\box28
-\lst@token=\toks22
-\lst@length=\count100
-\lst@currlwidth=\dimen114
-\lst@column=\count101
-\lst@pos=\count102
-\lst@lostspace=\dimen115
-\lst@width=\dimen116
-\lst@newlines=\count103
-\lst@lineno=\count104
-\lst@maxwidth=\dimen117
+\lst@mode=\count108
+\lst@gtempboxa=\box29
+\lst@token=\toks23
+\lst@length=\count109
+\lst@currlwidth=\dimen123
+\lst@column=\count110
+\lst@pos=\count111
+\lst@lostspace=\dimen124
+\lst@width=\dimen125
+\lst@newlines=\count112
+\lst@lineno=\count113
+\lst@maxwidth=\dimen126
  (/usr/local/texlive/2017/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count105
-\lst@skipnumbers=\count106
-\lst@framebox=\box29
+\c@lstnumber=\count114
+\lst@skipnumbers=\count115
+\lst@framebox=\box30
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
  (/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2016/11/05 v2.16a AMS math features
-\@mathmargin=\skip69
+\@mathmargin=\skip75
 
 For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
  (/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks23
-\ex@=\dimen118
+\@emptytoks=\toks24
+\ex@=\dimen127
 )) (/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen119
+\pmbraise@=\dimen128
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count107
+\inf@bad=\count116
 LaTeX Info: Redefining \frac on input line 213.
-\uproot@=\count108
-\leftroot@=\count109
+\uproot@=\count117
+\leftroot@=\count118
 LaTeX Info: Redefining \overline on input line 375.
-\classnum@=\count110
-\DOTSCASE@=\count111
+\classnum@=\count119
+\DOTSCASE@=\count120
 LaTeX Info: Redefining \ldots on input line 472.
 LaTeX Info: Redefining \dots on input line 475.
 LaTeX Info: Redefining \cdots on input line 596.
-\Mathstrutbox@=\box30
-\strutbox@=\box31
-\big@size=\dimen120
+\Mathstrutbox@=\box31
+\strutbox@=\box32
+\big@size=\dimen129
 LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
-\macc@depth=\count112
-\c@MaxMatrixCols=\count113
+\macc@depth=\count121
+\c@MaxMatrixCols=\count122
 \dotsspace@=\muskip10
-\c@parentequation=\count114
-\dspbrk@lvl=\count115
-\tag@help=\toks24
-\row@=\count116
-\column@=\count117
-\maxfields@=\count118
-\andhelp@=\toks25
-\eqnshift@=\dimen121
-\alignsep@=\dimen122
-\tagshift@=\dimen123
-\tagwidth@=\dimen124
-\totwidth@=\dimen125
-\lineht@=\dimen126
-\@envbody=\toks26
-\multlinegap=\skip70
-\multlinetaggap=\skip71
-\mathdisplay@stack=\toks27
+\c@parentequation=\count123
+\dspbrk@lvl=\count124
+\tag@help=\toks25
+\row@=\count125
+\column@=\count126
+\maxfields@=\count127
+\andhelp@=\toks26
+\eqnshift@=\dimen130
+\alignsep@=\dimen131
+\tagshift@=\dimen132
+\tagwidth@=\dimen133
+\totwidth@=\dimen134
+\lineht@=\dimen135
+\@envbody=\toks27
+\multlinegap=\skip76
+\multlinetaggap=\skip77
+\mathdisplay@stack=\toks28
 LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amssymb.sty
@@ -570,11 +612,11 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 )) (/usr/local/texlive/2017/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2013/01/06 v5.00 algorithms environments
-\c@AlgoLine=\count119
+\c@AlgoLine=\count128
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-\algocf@hangindent=\skip72
+\algocf@hangindent=\skip78
  (/usr/local/texlive/2017/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/relsize/relsize.sty
@@ -587,40 +629,40 @@ Package `algorithm2e' Release 5.1 -- october 19 2015 --
 subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 - Author: Christophe Fiorio (christophe.fiorio@umontpellier.fr)
 ********************************************************
-\skiptotal=\skip73
-\skiplinenumber=\skip74
-\skiprule=\skip75
-\skiphlne=\skip76
-\skiptext=\skip77
-\skiplength=\skip78
-\algomargin=\skip79
-\skipalgocfslide=\skip80
-\algowidth=\dimen127
-\inoutsize=\dimen128
-\inoutindent=\dimen129
-\interspacetitleruled=\dimen130
-\interspacealgoruled=\dimen131
-\interspacetitleboxruled=\dimen132
-\algocf@ruledwidth=\skip81
-\algocf@inoutbox=\box32
-\algocf@inputbox=\box33
-\AlCapSkip=\skip82
-\AlCapHSkip=\skip83
-\algoskipindent=\skip84
-\algocf@nlbox=\box34
-\algocf@hangingbox=\box35
-\algocf@untilbox=\box36
-\algocf@skipuntil=\skip85
-\algocf@capbox=\box37
-\algoheightruledefault=\skip86
-\algoheightrule=\skip87
-\algotitleheightruledefault=\skip88
-\algotitleheightrule=\skip89
-\c@algocfline=\count120
-\c@algocfproc=\count121
-\c@algocf=\count122
-\algocf@algoframe=\box38
-\algocf@algobox=\box39
+\skiptotal=\skip79
+\skiplinenumber=\skip80
+\skiprule=\skip81
+\skiphlne=\skip82
+\skiptext=\skip83
+\skiplength=\skip84
+\algomargin=\skip85
+\skipalgocfslide=\skip86
+\algowidth=\dimen136
+\inoutsize=\dimen137
+\inoutindent=\dimen138
+\interspacetitleruled=\dimen139
+\interspacealgoruled=\dimen140
+\interspacetitleboxruled=\dimen141
+\algocf@ruledwidth=\skip87
+\algocf@inoutbox=\box33
+\algocf@inputbox=\box34
+\AlCapSkip=\skip88
+\AlCapHSkip=\skip89
+\algoskipindent=\skip90
+\algocf@nlbox=\box35
+\algocf@hangingbox=\box36
+\algocf@untilbox=\box37
+\algocf@skipuntil=\skip91
+\algocf@capbox=\box38
+\algoheightruledefault=\skip92
+\algoheightrule=\skip93
+\algotitleheightruledefault=\skip94
+\algotitleheightrule=\skip95
+\c@algocfline=\count129
+\c@algocfproc=\count130
+\c@algocf=\count131
+\algocf@algoframe=\box39
+\algocf@algobox=\box40
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
  (/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphics.sty
@@ -638,25 +680,25 @@ Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 ) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count123
+\Gread@gobject=\count132
 ))
-\Gin@req@height=\dimen133
-\Gin@req@width=\dimen134
+\Gin@req@height=\dimen142
+\Gin@req@width=\dimen143
 ) (/Users/olivka/Documents/Univer/M1/ter/rapport.aux)
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -692,23 +734,33 @@ LaTeX Font Info:    ... okay on input line 27.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \degres on input line 27.
-LaTeX Info: Redefining \dots on input line 27.
-LaTeX Info: Redefining \up on input line 27.
-\c@lstlisting=\count124
+LaTeX Info: Redefining \degres on input line 34.
+LaTeX Info: Redefining \dots on input line 34.
+Package frenchb.ldf Info: Setting StandardItemizeEnv=true for
+(frenchb.ldf)             compatibility with enumitem package,
+(frenchb.ldf)             reported on input line 34.
+Package frenchb.ldf Info: Setting StandardEnumerateEnv=true for
+(frenchb.ldf)             compatibility with enumitem package,
+(frenchb.ldf)             reported on input line 34.
+LaTeX Info: Redefining \up on input line 34.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count133
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count125
-\scratchdimen=\dimen135
-\scratchbox=\box40
-\nofMPsegments=\count126
-\nofMParguments=\count127
-\everyMPshowfont=\toks28
-\MPscratchCnt=\count128
-\MPscratchDim=\dimen136
-\MPnumerator=\count129
-\makeMPintoPDFobject=\count130
-\everyMPtoPDFconversion=\toks29
+\scratchcounter=\count134
+\scratchdimen=\dimen144
+\scratchbox=\box41
+\nofMPsegments=\count135
+\nofMParguments=\count136
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count137
+\MPscratchDim=\dimen145
+\MPnumerator=\count138
+\makeMPintoPDFobject=\count139
+\everyMPtoPDFconversion=\toks30
 ) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO)
  (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifluatex.sty
@@ -743,421 +795,200 @@ Package grfext Info: Graphics extension search list:
  (/usr/local/texlive/2017/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 51.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 58.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 51.
+LaTeX Font Info:    Try loading font information for U+msa on input line 58.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 51.
+LaTeX Font Info:    Try loading font information for U+msb on input line 58.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-No file rapport.toc.
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (/Users/olivka/Documents/Univer/M1/ter/rapport.toc)
 \tf@toc=\write3
 \openout3 = `rapport.toc'.
 
-<./img/logounistra.png, id=11, 518.93875pt x 197.73875pt>
+ <./img/logounistra.png, id=10, 518.93875pt x 197.73875pt>
 File: ./img/logounistra.png Graphic file (type png)
  <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 56.
+Package pdftex.def Info: ./img/logounistra.png used on input line 64.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
  [2 <./img/logounistra.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 61--64
+Underfull \hbox (badness 10000) in paragraph at lines 69--72
 
  []
 
 File: ./img/logounistra.png Graphic file (type png)
 <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 80.
+Package pdftex.def Info: ./img/logounistra.png used on input line 88.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
  [3]
-Underfull \hbox (badness 10000) in paragraph at lines 84--86
+Underfull \hbox (badness 10000) in paragraph at lines 92--94
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--88
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
 
  []
 
 <./img/deadlock.png, id=22, 1204.5pt x 667.49374pt>
 File: ./img/deadlock.png Graphic file (type png)
  <use ./img/deadlock.png>
-Package pdftex.def Info: ./img/deadlock.png used on input line 90.
+Package pdftex.def Info: ./img/deadlock.png used on input line 98.
 (pdftex.def)             Requested size: 240.89574pt x 133.49638pt.
 File: ./img/logounistra.png Graphic file (type png)
  <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 99.
+Package pdftex.def Info: ./img/logounistra.png used on input line 107.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
  [4 <./img/deadlock.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 103--104
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
 
  []
 
 <./img/program.png, id=27, 374.39874pt x 143.53625pt>
 File: ./img/program.png Graphic file (type png)
  <use ./img/program.png>
-Package pdftex.def Info: ./img/program.png used on input line 110.
+Package pdftex.def Info: ./img/program.png used on input line 118.
 (pdftex.def)             Requested size: 374.39783pt x 143.53589pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--118
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
 
  []
 
 File: ./img/logounistra.png Graphic file (type png)
 <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 119.
+Package pdftex.def Info: ./img/logounistra.png used on input line 127.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
  [5 <./img/program.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 156--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
+
+ []
+
 File: ./img/logounistra.png Graphic file (type png)
- <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 142.
+<use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 180.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
  [6]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 164.
+File: ./img/logounistra.png Graphic file (type png)
+ <use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 192.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [7]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 224.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 164.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 224.
 File: ./img/logounistra.png Graphic file (type png)
  <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 183.
+Package pdftex.def Info: ./img/logounistra.png used on input line 231.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
- [7]
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:193: Missing $ inserted.
-<inserted text> 
-                $
-l.193   \item[CLOCK_CREATE]
-                           
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+ [8] <./img/ast_exemple.png, id=46, 483.8075pt x 286.06876pt>
+File: ./img/ast_exemple.png Graphic file (type png)
+ <use ./img/ast_exemple.png>
+Package pdftex.def Info: ./img/ast_exemple.png used on input line 257.
+(pdftex.def)             Requested size: 241.90315pt x 143.03403pt.
 
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:193: Extra }, or forgotten $.
-\sbox ...hbox {\color@setgroup #2\color@endgroup }
-                                                  
-l.193   \item[CLOCK_CREATE]
-                           
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+Underfull \hbox (badness 10000) in paragraph at lines 253--263
 
-
-LaTeX Warning: Command \' invalid in math mode on input line 194.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 195.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 195.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 195.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 196.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 197.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:198: Missing $ inserted.
-<inserted text> 
-                $
-l.198 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:198: Missing } inserted.
-<inserted text> 
-                }
-l.198 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:199: Missing $ inserted.
-<inserted text> 
-                $
-l.199   \item[END_FINISH]
-                         :
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:199: Extra }, or forgotten $.
-\sbox ...hbox {\color@setgroup #2\color@endgroup }
-                                                  
-l.199   \item[END_FINISH]
-                         :
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:201: LaTeX Error: Command \item invalid in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.201   \item
-             [ASYNC_SUITE]:
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:201: Missing $ inserted.
-<inserted text> 
-                $
-l.201   \item[ASYNC_SUITE]
-                          :
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:201: Missing } inserted.
-<inserted text> 
-                }
-l.201   \item[ASYNC_SUITE]
-                          :
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:201: Missing $ inserted.
-<inserted text> 
-                $
-l.201   \item[ASYNC_SUITE]
-                          :
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:201: Extra }, or forgotten $.
-\sbox ...hbox {\color@setgroup #2\color@endgroup }
-                                                  
-l.201   \item[ASYNC_SUITE]
-                          :
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 203.
-
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:204: LaTeX Error: Command \item invalid in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.204   \item
-             [CLOCK_REGISTER]:
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:204: Missing $ inserted.
-<inserted text> 
-                $
-l.204   \item[CLOCK_REGISTER]
-                             :
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:204: Missing } inserted.
-<inserted text> 
-                }
-l.204   \item[CLOCK_REGISTER]
-                             :
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no é in font cmr12!
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:204: Missing $ inserted.
-<inserted text> 
-                $
-l.204   \item[CLOCK_REGISTER]
-                             :
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:204: Extra }, or forgotten $.
-\sbox ...hbox {\color@setgroup #2\color@endgroup }
-                                                  
-l.204   \item[CLOCK_REGISTER]
-                             :
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 205.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 206.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 206.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 206.
-
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:207: LaTeX Error: Command \item invalid in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.207   \item
-              [END_ASYNC]
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:207: Missing $ inserted.
-<inserted text> 
-                $
-l.207   \item [END_ASYNC]
-                         
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:207: Missing } inserted.
-<inserted text> 
-                }
-l.207   \item [END_ASYNC]
-                         
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-Missing character: There is no é in font cmr12!
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:207: Missing $ inserted.
-<inserted text> 
-                $
-l.207   \item [END_ASYNC]
-                         
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:207: Extra }, or forgotten $.
-\sbox ...hbox {\color@setgroup #2\color@endgroup }
-                                                  
-l.207   \item [END_ASYNC]
-                         
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:208: LaTeX Error: Command \item invalid in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.208   \item
-              [ADVANCE]
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:208: Missing $ inserted.
-<inserted text> 
-                $
-l.208   \item [ADVANCE]
-                       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/olivka/Documents/Univer/M1/ter/rapport.tex:208: Missing } inserted.
-<inserted text> 
-                }
-l.208   \item [ADVANCE]
-                       
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (2167.88496pt too wide) in paragraph at lines 209--209
-[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
+Underfull \hbox (badness 10000) in paragraph at lines 253--263
 
  []
 
 File: ./img/logounistra.png Graphic file (type png)
 <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 211.
+Package pdftex.def Info: ./img/logounistra.png used on input line 264.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
- [8]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 229.
+ [9 <./img/ast_exemple.png>]
+Overfull \hbox (0.40811pt too wide) in paragraph at lines 273--274
+[]\T1/cmr/m/n/12 - comme dans le lan-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 287--291
+
+ []
+
+File: ./img/logounistra.png Graphic file (type png)
+<use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 295.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [10]
+File: ./img/logounistra.png Graphic file (type png)
+ <use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 338.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [11]
+File: ./img/logounistra.png Graphic file (type png)
+ <use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 393.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [12] <./img/prog_pile.png, id=60, 223.83624pt x 126.4725pt>
+File: ./img/prog_pile.png Graphic file (type png)
+ <use ./img/prog_pile.png>
+Package pdftex.def Info: ./img/prog_pile.png used on input line 409.
+(pdftex.def)             Requested size: 179.06923pt x 101.17813pt.
+ <./img/pile.png, id=61, 157.58875pt x 297.11pt>
+File: ./img/pile.png Graphic file (type png)
+ <use ./img/pile.png>
+Package pdftex.def Info: ./img/pile.png used on input line 410.
+(pdftex.def)             Requested size: 78.79417pt x 148.55463pt.
+File: ./img/logounistra.png Graphic file (type png)
+ <use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 428.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [13 <./img/prog_pile.png> <./img/pile.png>]
+File: ./img/logounistra.png Graphic file (type png)
+ <use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 428.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [14]
+File: ./img/logounistra.png Graphic file (type png)
+ <use ./img/logounistra.png>
+Package pdftex.def Info: ./img/logounistra.png used on input line 446.
+(pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
+ [15]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 465.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 File: ./img/logounistra.png Graphic file (type png)
  <use ./img/logounistra.png>
-Package pdftex.def Info: ./img/logounistra.png used on input line 234.
+Package pdftex.def Info: ./img/logounistra.png used on input line 470.
 (pdftex.def)             Requested size: 103.7859pt x 39.54704pt.
- [9] (/Users/olivka/Documents/Univer/M1/ter/rapport.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- )
+ [16] (/Users/olivka/Documents/Univer/M1/ter/rapport.aux) )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 9513 strings out of 492995
- 143356 string characters out of 6132704
- 338961 words of memory out of 5000000
- 12922 multiletter control sequences out of 15000+600000
- 19656 words of font info for 53 fonts, out of 8000000 for 9000
+ 11017 strings out of 492995
+ 170577 string characters out of 6132704
+ 368406 words of memory out of 5000000
+ 14404 multiletter control sequences out of 15000+600000
+ 19650 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,14n,51p,8891b,4060s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on /Users/olivka/Documents/Univer/M1/ter/rapport.pdf (9 pages, 342373 bytes).
+ 50i,14n,54p,8891b,4172s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on /Users/olivka/Documents/Univer/M1/ter/rapport.pdf (16 pages, 501317 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 125 PDF objects out of 1000 (max. 8388607)
+ 81 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

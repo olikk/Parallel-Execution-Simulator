@@ -3,296 +3,462 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h> 
+#include "pile.h"
 
-int activity_counter = 1;
+int activity_counter = 0;
 int finish_counter = 0;
 
 
 clocks* create_clock(char* id){
-  clocks* new = check_alloc(sizeof(struct clocks));
-  new->registered = check_alloc(sizeof(struct activity));
-  new->blocked = check_alloc(sizeof(struct activity));
-  new->id = id;
-  return new;
+	clocks* new = check_alloc(sizeof(struct clocks));
+	new->registered = NULL;
+	new->blocked = NULL;
+	new->name = id;
+    new->next = NULL;
+	return new;
 }
-clocks* add_clock(clocks* clock_list, char* id){
-  clocks* new = create_clock(id);
-  new->next = clock_list; 
-  return new;
+clocks* add_clock(clocks* clock_list, clocks* new){
+	new->next = clock_list; 
+	return new;
 }
-clocks* find_clock(char* id, clocks* clocks){
-  struct clocks* temp = clocks;
-  while(temp != NULL){
-    if (strcmp(temp->id, id) == 0)
-      return temp;
-  }
-  return NULL;
+clocks_list* create_clock_list(clocks* c){
+	clocks_list* new = check_alloc(sizeof(struct clocks_list));
+	new->element = c;
+    new->next = NULL;
+	return new;
 }
-void clock_register(clocks* clk, activity* a){
-  if (clk->registered != NULL){
-    clk->registered->next = clk->registered;
-    clk->registered = a;
-  }else{
-    clk->registered = a;
-    clk->registered->next = NULL;
-  }
+clocks_list* add_clock_list(clocks_list* clock_list, clocks_list* new){
+	new->next = clock_list; 
+	return new;
 }
+clocks* find_clock(char* id, clocks_list* list){
+	struct clocks_list* temp = list;
+	while(temp != NULL){
+		if (strcmp(temp->element->name, id) == 0){
+            break;
+        } else{
+		    temp = temp->next;
+        }
+	}
+	return temp->element;
+}
+/*void clock_register(clocks* clk, activity* a){
+	if (clk->registered != NULL){
+		clk->registered->next = clk->registered;
+		clk->registered = a;
+	}else{
+		clk->registered = a;
+		clk->registered->next = NULL;
+	}
+}*/
 
-void clock_deregister(clocks* clk, int activity){
-  while (clk->registered != NULL){
-    //activity* temp = clk->registered->next;           //???
-    if (clk->registered->id == activity){
-      clk->registered = clk->registered->next;
+void remove_activity(activity_list** list, int id){
+    struct activity_list* curr; //clk->registered;
+    /* For 1st node, indicate there is no previous. */
+    struct activity_list* prev = NULL;
+    /*
+    * Visit each node, maintaining a pointer to
+    * the previous node we just visited.
+    */
+    for (curr = *list; curr != NULL; prev = curr, curr = curr->next) {
+        if (curr->element->id == id) {  /* Found it. */
+            if (prev == NULL) {
+                /* Fix beginning pointer. */
+                *list = curr->next;
+            } else {
+                /*
+                * Fix previous node's next to
+                * skip over the removed node.
+                */
+                prev->next = curr->next;
+            } 
+            /* Deallocate the node. */
+            free(curr);
+            /* Done searching. */
+            return;
+        }
     }
-  }
 }
 
-void clock_block(clocks* clk, activity* a){
-  if (clk->blocked != NULL){
-    clk->blocked->next = a;
-    clk->blocked->next->next = NULL;
-  }else{
-    clk->blocked = a;
-    clk->blocked->next = NULL;
-  }
-}
-
-void clock_unblock(clocks* clk, int activity){
-  while (clk->blocked != NULL){
-    if (clk->blocked->id == activity){
-      clk->blocked = clk->blocked->next;
-    }
-  }
-}
 activity* create_activity(int id){
-  activity* new = check_alloc(sizeof(struct activity));
-  new->id = id;
-  new->next = NULL;
-  return new;
+	activity* new = check_alloc(sizeof(struct activity));
+	new->id = id;
+	new->next = NULL;
+    new->finish_stack = NULL;
+    new->registered_with = NULL;
+	return new;
+}
+activity* find_activity(int id, activity_list* act){
+	struct activity_list* temp = act;
+	while (temp != NULL){
+		if (temp->element->id == id){
+            return temp->element;
+        }	
+        temp = temp->next;
+	}
+	return NULL;
 }
 
-activity* add_activity(activity* root, int id){
-  activity* new = create_activity(id);
-  new->next = root;
-  return new;
+activity* add_activity(activity* root, activity* new){
+	activity* tmp = root;
+	if (root == NULL){
+	    root = new;
+    }else{
+		while(tmp->next != NULL){
+            tmp = tmp->next;
+        }	
+		tmp->next = new;
+        
+	}
+	return root;
 }
-
-activity* copy_activities(activity* liste){
-  activity* current = liste;
-  activity* new = NULL; 
-  while (current != NULL){
-    if (new == NULL){
-      new = create_activity(current->id); 
-    } else {
-      new = add_activity(new, current->id);
+activity_list* create_activity_list(activity* a){
+	activity_list* new = check_alloc(sizeof(struct activity_list));
+	new->element = a;
+	new->next = NULL;
+	return new;
+}
+activity_list* add_activity_list(activity_list* root, activity_list* new){
+	activity_list* tmp = root;
+	if (root == NULL){
+	    root = new;
+    }else{
+		while(tmp->next != NULL){
+            tmp = tmp->next;
+        }	
+		tmp->next = new;
+        
+	}
+	return root;
+}
+int activity_list_length(activity_list* act){
+	int len = 0;
+	struct activity_list* temp = act;
+	while (temp != NULL){
+		len++;
+        temp = temp->next;
+	}
+	return len;
+}
+int compare_activities(activity_list* list1, activity_list* list2){
+	activity_list* a = list1;
+    if (a == NULL && list2 == NULL){
+        return 1;
     }
-    new->program_counter = current->program_counter;
-      //new->finish = 
-      //new->clock_registered = 
-      //new->pile = 
-    current = current->next;
-  }
-  return new;
-}
-
-int compare_activities(activity* list1, activity* list2){
-  activity* a = list1;
-  activity* b = list2;
-  while (a != NULL && b != NULL) 
-    { 
-        if (a->id != b->id) 
-            return 0; 
-  
-        /* If we reach here, then a and b are  
-        not NULL and their data is same, so  
-        move to next nodes in both lists */
-        a = a->next; 
-        b = b->next; 
-    } 
-  
-    // If linked lists are identical, then  
-    // 'a' and 'b' must be NULL at this point. 
-    return (a == NULL && b == NULL); 
+	if ( activity_list_length(list1) != activity_list_length(list2)) {
+		return 0;
+	}
+	while (a != NULL) { 
+		if (find_activity(a->element->id, list2) == NULL){
+            return 0;
+        }
+        a = a->next;
+    }
+    
+	return 1; 
 }
 
 finish* create_finish(int id){
-  finish* new = check_alloc(sizeof(struct finish));
-  new->id = id;
-  new->next = NULL;
-  return new;
+	finish* new = check_alloc(sizeof(struct finish));
+	new->id = id;
+    new->activities = NULL;
+    new->clocks = NULL;
+	new->next = NULL;
+	return new;
 }
 
-finish* add_finish(finish* root, int id){
-  finish* new = create_finish(id);
-  new->next = root;
-  return new;
+finish* add_finish(finish* root, finish* new){
+	new->next = root;
+	return new;
 }
-ready* add_ready(ready* ready, activity* a){
-  struct ready* new = check_alloc(sizeof(struct ready));
-  new->activity  = a;
-  new->next = ready;
-  return new;
+finish_list* create_finish_list(finish* f){
+	finish_list* new = check_alloc(sizeof(struct finish_list));
+	new->element = f;
+	new->next = NULL;
+	return new;
 }
 
-ready* remove_ready(ready* ready, int a){
-  while (ready->activity != NULL){
-    if (ready->activity->id == a){
-      ready->activity = ready->activity->next;
-    }
-  }
-  return ready;
+finish_list* add_finish_list(finish_list* root, finish_list* new){
+	new->next = root;
+	return new;
+}
+activity_list* remove_ready_activity(activity_list* act){
+	return act->next;
 }
 /*void activity_free(activity* a){
-  activity* temp;
-  while (a!=NULL){
-    temp = a->next;
-    free(a);
-    a = temp;
-  }
+	activity* temp;
+	while (a!=NULL){
+		temp = a->next;
+		free(a);
+		a = temp;
+	}
 }*/
 void clock_free(clocks* clock){
-  free(clock->registered);
-  free(clock->blocked);
-  //activity_free(clock->registered);
-  //activity_free(clock->blocked);
-  free(clock);
+	free(clock->registered);
+	free(clock->blocked);
+	//activity_free(clock->registered);
+	//activity_free(clock->blocked);
+	free(clock);
 }
 
-void advance(clocks* clk, ready* ready, activity* activity){
-  clock_block(clk, activity);
-  ready = remove_ready(ready,activity);
+ 
+
+void run(code* codelist){
+    program_state = check_alloc(sizeof(struct state));
+	activity_list* current = create_activity_list(create_activity(activity_counter++));
+    program_state->ready_activities = add_activity_list(NULL, current);
+	program_state->running = current;
+	while (program_state->ready_activities != NULL){
+		execute(program_state->running, codelist);
+	}
 }
 
-void run(code* codelist, state* program_state){
-  while (program_state->ready != NULL){
-    execute(program_state->running, codelist);
-  }
+void execute(activity_list* act, code* codelist){
+	code* code = goto_code(codelist, act->element->program_counter);
+	act->element->program_counter = act->element->program_counter + 1; //next instruction
+
+	if (strcmp(code->op, "PUSH")==0) {
+
+		printf("push oper\n");
+
+	}else if (strcmp(code->op, "IFTRUE")==0){ //goto
+
+		act->element->program_counter = code->goto_label;
+
+	}else if (strcmp(code->op, "LOOP")==0){ //goto
+
+		act->element->program_counter = code->goto_label;
+
+	}else if (strcmp(code->op, "IFZERO")==0){ //goto
+
+		act->element->program_counter = code->goto_label; 
+
+	}else if (strcmp(code->op, "SET")==0){
+				
+	}else if (strcmp(code->op, "INC")==0){
+				
+	}else if (strcmp(code->op, "ENDELSE")==0){ //goto
+
+		act->element->program_counter = code->goto_label;
+
+	}else if (strcmp(code->op, "BASIC")==0){
+
+		printf("executing %s\n", code->arg1);
+
+	}else if (strcmp(code->op, "FINISH")==0){
+
+		printf("finish exec\n");
+		//creer un nouveau finish et le rajouter dans une pile de l'activité en cours
+		finish* new = create_finish(finish_counter++);
+		new->parent = program_state->running->element;
+		act->element->finish_stack= add_finish_list(act->element->finish_stack, create_finish_list(new));
+
+	}else if (strcmp(code->op, "CLOCK_CREATE")==0){
+
+		printf("clock_create exec\n");
+		//create clock and add it to current activity
+		act->element->registered_with = add_clock_list(act->element->registered_with , create_clock_list(create_clock(code->arg1)));
+		printf("created: %s\n ",act->element->registered_with->element->name);
+		//add current activity to this clock
+		act->element->registered_with->element->registered = add_activity_list(act->element->registered_with->element->registered, create_activity_list(act->element));
+		//add clock to finish
+		act->element->finish_stack->element->clocks = add_clock_list(act->element->finish_stack->element->clocks, create_clock_list(act->element->registered_with->element));
+
+	}else if (strcmp(code->op, "END_PREAMBLE")==0){ 
+		printf("end_preamble\n");
+        if ((code->arg1 != NULL) && (strcmp(code->arg1, "GOTO")==0)){ //goto (async)
+
+			//change to the main activity after register clocks
+			program_state->running = program_state->ready_activities; 
+			program_state->running->element->program_counter = code->goto_label;
+		}
+	}else if (strcmp(code->op, "END_FINISH")==0){
+		
+        // if activities file inside this finish is not empty
+        if (act->element->finish_stack->element->activities != NULL){
+            act->element->finish_stack->element->is_waiting = 1;
+            //for each clock of this finish remove current activity from their pile 'registered'
+            clocks_list* temp = act->element->finish_stack->element->clocks;
+			
+            while( temp != NULL){
+                remove_activity(&(temp->element->registered), act->element->id);
+                temp = temp->next;
+            }
+            //remove current activity from ready
+            program_state->ready_activities = remove_ready_activity(program_state->ready_activities );
+			program_state->running = program_state->ready_activities;
+        } else { 
+			//if all activities are done
+            act->element->finish_stack->element->is_waiting = 0;
+
+            //destroy each clock of this finish 
+            clocks_list* temp = act->element->finish_stack->element->clocks;
+
+            while( act->element->finish_stack->element->clocks != NULL) {
+
+                if(act->element->finish_stack->element->clocks->element->registered != NULL) free(act->element->finish_stack->element->clocks->element->registered);
+                if(act->element->finish_stack->element->clocks->element->blocked != NULL) free(act->element->finish_stack->element->clocks->element->blocked);
+
+                temp = act->element->finish_stack->element->clocks->next;
+                free(act->element->finish_stack->element->clocks);
+
+                act->element->finish_stack->element->clocks = temp;
+            }
+			//si l'activité qui a créé le finish est bloquée -> le mettre en ready
+			if (find_activity(act->element->finish_stack->element->parent->id, program_state->ready_activities) == NULL){
+				program_state->ready_activities = add_activity_list(program_state->ready_activities, create_activity_list(act->element->finish_stack->element->parent));
+				program_state->running = program_state->ready_activities;
+			}
+        }
+		printf("end finish\n");
+
+	}else if (strcmp(code->op, "ASYNC")==0){ 
+
+		printf("async exec\n"); 
+        //create directly new activity 
+        activity* new = create_activity(activity_counter++);
+        new->program_counter = act->element->program_counter;
+        //add embracing finish to this new activity finish stack
+        new->finish_stack = add_finish_list(new->finish_stack, create_finish_list(act->element->finish_stack->element));
+        //add it to ready activities
+		activity_list* elmt  = create_activity_list(new);
+        act = add_activity_list(act, elmt);
+        //add it to finish created activities
+        act->element->finish_stack->element->activities = add_activity_list(act->element->finish_stack->element->activities, elmt);
+		//change to other activities
+		program_state->running = program_state->running->next;
+
+	}else if (strcmp(code->op, "CLOCK_REGISTER")==0){ 
+
+		printf("clock register\n");
+        clocks* clk = find_clock(code->arg1, act->element->finish_stack->element->clocks);
+        //add clock to activity clock list
+		act->element->registered_with = add_clock_list(act->element->registered_with, create_clock_list(clk));
+        //add curent activity to clock registered list
+        clk->registered = add_activity_list(clk->registered, create_activity_list(act->element));
+
+	}else if (strcmp(code->op, "END_ASYNC")==0){
+		print_ready_activities(act);
+		//remove current activity from registered activities pile for each clock that it's registered with it
+        clocks_list* clk = act->element->registered_with;
+        while (clk != NULL){
+            remove_activity(&(clk->element->registered),act->element->id);
+			//le test entre blocked et registered
+			if (compare_activities(clk->element->blocked, clk->element->registered) == 1){    //if identical
+				//copy activities from blocked list to ready activities and empty blocked list
+				activity_list* temp = clk->element->blocked;
+				while (clk->element->blocked != NULL){
+					program_state->ready_activities = add_activity_list(program_state->ready_activities, create_activity_list(clk->element->blocked->element));
+					temp = clk->element->blocked->next;
+					free(clk->element->blocked);
+					clk->element->blocked = temp;
+				}
+			}
+			clk = clk->next;
+        }
+        //remove current activity from finish 
+        remove_activity(&(act->element->finish_stack->element->activities), act->element->id);
+        //remove from ready
+        program_state->ready_activities = remove_ready_activity(program_state->ready_activities);
+		program_state->running = program_state->ready_activities;
+		program_state->running->element->program_counter = act->element->program_counter;
+
+	}else if (strcmp(code->op, "ADVANCE")==0){
+		print_ready_activities(act);
+		printf("advance exec\n");
+		//add current activity to clock blocked pile
+        clocks* clk = find_clock(code->arg1, act->element->registered_with);
+		if (find_activity(act->element->id,clk->blocked ) == NULL){
+        	clk->blocked = add_activity_list(clk->blocked, create_activity_list(act->element));
+			//remove form ready
+	    	program_state->ready_activities = remove_ready_activity(program_state->ready_activities);
+			program_state->running = program_state->ready_activities;
+		}
+        // compare blocked and registered
+        if (compare_activities(clk->blocked, clk->registered) == 1){    //if identical
+            //copy activities from blocked list to ready activities and empty blocked list
+            activity_list* temp = clk->blocked;
+            while (clk->blocked != NULL){
+                program_state->ready_activities = add_activity_list(program_state->ready_activities, create_activity_list(clk->blocked->element));
+                temp = clk->blocked->next;
+                free(clk->blocked);
+                clk->blocked = temp;
+            }
+			program_state->running = program_state->ready_activities;
+        }
+        printf("end advance\n");
+
+	}else{
+
+		printf("error: code list is undefined\n");
+		exit(1);
+	}
 }
 
-void execute(activity* act, code* codelist){
-  code* code = goto_label(codelist, act->program_counter);
-  act->program_counter = act->program_counter + 1; //next instruction
+//////////////////////////////  PRINT FUNCTIONS   //////////////////////////////////////
 
-  if (strcmp(code->op, "EVAL")==0) {
-
-      /*printf("start compare oper\n");
-      if (strcmp(ast->u.operation.op, "+") == 0){
-        stack = push(stack, (pop(stack) + pop(stack)));
-        printf("pass firts +\n");
-      }
-        
-      else if (strcmp(ast->u.operation.op, "-") == 0)
-        stack = push(stack, (pop(stack) - pop(stack)));
-      else if (strcmp(ast->u.operation.op, "/") == 0)
-        stack = push(stack, (pop(stack) / pop(stack)));
-      else if (strcmp(ast->u.operation.op, "*") == 0)
-        stack = push(stack, (pop(stack) * pop(stack)));
-      else if (strcmp(ast->u.operation.op, ">") == 0)
-        stack = push(stack, (pop(stack) > pop(stack)));
-      else if (strcmp(ast->u.operation.op, ">") == 0)
-        stack = push(stack, (pop(stack) < pop(stack)));
-      else if (strcmp(ast->u.operation.op, ">=") == 0)
-        stack = push(stack, (pop(stack) >= pop(stack)));
-      else if (strcmp(ast->u.operation.op, "<=") == 0)
-        stack = push(stack, (pop(stack) <= pop(stack)));
-      else if (strcmp(ast->u.operation.op, "==") == 0)
-        stack = push(stack, (pop(stack) == pop(stack)));
-      else if (strcmp(ast->u.operation.op, "!=") == 0)
-        stack = push(stack, (pop(stack) != pop(stack)));*/
-
-    }else if (strcmp(code->op, "IFTRUE")==0){ //goto
-
-    }else if (strcmp(code, "LOOP")==0){ //goto
-        
-    }else if (strcmp(code, "IFFALSE")==0){ //goto
-        
-    }else if (strcmp(code, "SET")==0){
-        
-    }else if (strcmp(code, "INC")==0){
-        
-    }else if (strcmp(code, "ENDELSE")==0){ //goto
-        
-    }else if (strcmp(code, "BASIC")==0){
-
-        printf("executing %s\n", codelist->arg1);
-        //sleep(2);
-        
-    }else if (strcmp(code, "FINISH")==0){
-
-      printf("finish exec\n");
-      //creer un nouveau finish et le rajouter dans une pile de l'activité en cours
-      program_state->finish_list = add_finish(NULL, finish_counter++);
-
-      exec_code(goto_code(codelist, codelist->label+1), program_state);
-
-    }else if (strcmp(code, "CLOCK_CREATE")==0){
-
-      printf("clock_create exec\n");
-
-      program_state->clock_list = add_clock(program_state->clock_list, codelist->arg1);
-      //add activity to clock? how to know which one??
-      exec_code(goto_code(codelist, codelist->label+1), program_state);
-
-    }else if (strcmp(code, "END_FINISH")==0){
-        
-    }else if (strcmp(code, "ASYNC_SUITE")==0){ //goto
-      printf("async_suite exec\n");  
-      exec_code(goto_code(codelist, codelist->goto_label), program_state);
-
-    }else if (strcmp(code, "EVAL")==0){
-        
-    }else if (strcmp(code, "CLOCK_REGISTER")==0){
-        
-    }else if (strcmp(code, "END_ASYNC")==0){
-        
-    }else if (strcmp(code, "ADVANCE")==0){
-      printf("advance exec\n");
-        //wait
-      advance(find_clock(codelist->arg1, program_state->clock_list), program_state->ready_activities, program_state->activity_list);
-      exec_code(goto_code(codelist, codelist->label+1), program_state);
-    }else{
-        printf("error: code list is indefined\n");
-        exit(1);
-    }
+void print_clocks_name(clocks_list* clocks){
+	struct clocks_list* temp = clocks;
+	while(temp != NULL){
+		printf("%s ", temp->element->name);
+        temp = temp->next;
+	}
 }
-void print_activity(activity* activity){
-  struct activity* temp = activity;
-  while(temp != NULL){
-    printf("A%d \n", temp->id);
-    if (temp->finish != NULL) printf("with embracing finish: F%d" , temp->finish->id);
-    //printf("\n");
-    temp = temp->next;
-  }
+void print_activities_name(activity_list* activity){
+	struct activity_list* temp = activity;
+	while(temp != NULL){
+		printf("A%d  ", temp->element->id);
+        temp = temp->next;
+	}
+}
+void print_finish(finish_list* f){
+	struct finish_list* temp = f;
+	while(temp != NULL){
+		printf("F%d\n", temp->element->id);
+		printf("created activities: ");
+		print_activities_name(temp->element->activities);
+		printf("created clocks: ");
+		print_clocks_name(temp->element->clocks);
+		temp = temp->next;
+		printf("\n		");
+	}
+	printf("\n");
 }
 
-void print_clocks(clocks* clocks){
-  struct clocks* temp = clocks;
-  while(temp != NULL){
-    printf("%s\n", temp->id);
-    printf("registered activities: ");
-    if (temp->registered != NULL) print_activity(temp->registered);
-    printf("blocked activities: ");
-    if (temp->blocked != NULL) print_activity(temp->blocked);
-    temp = temp->next;
-  }
-  printf("\n");
+void print_clocks(clocks_list* clocks){
+	struct clocks_list* temp = clocks;
+	while(temp != NULL){
+		printf("%s:\n", temp->element->name);
+		printf("registered activities: ");
+		if (temp->element->registered != NULL) print_activities_name(temp->element->registered);
+		printf("blocked activities: ");
+		if (temp->element->blocked != NULL) print_activities_name(temp->element->blocked);
+		temp = temp->next;
+		printf("\n		");
+	}
+	printf("\n");
 }
-void print_ready_activity(ready* activity){
-  struct ready* temp = activity;
-  while(temp != NULL){
-    printf("A%d ", temp->activity->id);
-    temp = temp->next;
-  }
-  printf("\n");
+
+void print_ready_activities(activity_list* activity){
+	struct activity_list* temp = activity;
+	while(temp != NULL){
+		printf("A%d: \n    ", temp->element->id);
+		printf("finish pile:  ");
+		if (temp->element->finish_stack != NULL) print_finish(temp->element->finish_stack);
+		if (temp->element->registered_with != NULL){
+            printf("\n     clocks:  ");
+            print_clocks(temp->element->registered_with);
+        } 
+		temp = temp->next;
+		printf("\n");
+	}
+	printf("\n\n");
 }
+
 void print_state(state* state){
-  printf("\nPROGRAM STATE:\n\n");
-  printf("ready activities: ");
-  print_ready_activity(state->ready_activities);
-  printf("all program activities: ");
-  print_activity(state->activity_list);
-  printf("clocks: \n");
-  print_clocks(state->clock_list);
+	printf("\nPROGRAM STATE:\n\n");
+	printf("ready activities: ");
+	print_ready_activities(state->ready_activities);
 }
 
 

@@ -4,10 +4,15 @@
 \contentsline {subsection}{\numberline {1.2}Programmes parall\IeC {\`e}les}{3}
 \contentsline {subsection}{\numberline {1.3}Interblocage}{4}
 \contentsline {subsection}{\numberline {1.4}Probl\IeC {\`e}me et objectifs}{5}
-\contentsline {section}{\numberline {2}La liste des t\IeC {\^a}ches d\IeC {\'e}j\IeC {\`a} effectu\IeC {\'e}es}{6}
-\contentsline {subsection}{\numberline {2.1}Le travail r\IeC {\'e}alis\IeC {\'e}}{6}
-\contentsline {section}{\numberline {3}Le planning pr\IeC {\'e}visionnel des t\IeC {\^a}ches \IeC {\`a} r\IeC {\'e}aliser}{6}
-\contentsline {section}{\numberline {4}Choix d'impl\IeC {\'e}mentation et diff\IeC {\'e}rentes \IeC {\'e}tapes}{7}
-\contentsline {subsection}{\numberline {4.1}Grammaire}{7}
-\contentsline {subsection}{\numberline {4.2}G\IeC {\'e}n\IeC {\'e}ration du code interm\IeC {\'e}diaire}{8}
-\contentsline {section}{R\IeC {\'e}f\IeC {\'e}rences}{9}
+\contentsline {section}{\numberline {2}Choix d'impl\IeC {\'e}mentation et diff\IeC {\'e}rentes \IeC {\'e}tapes de r\IeC {\'e}alisation du projet}{6}
+\contentsline {section}{\numberline {3}Le langage}{6}
+\contentsline {section}{\numberline {4}Le compilateur}{8}
+\contentsline {subsection}{\numberline {4.1}Grammaire}{8}
+\contentsline {subsection}{\numberline {4.2}Construction d'un arbre syntaxique abstrait}{9}
+\contentsline {subsection}{\numberline {4.3}V\IeC {\'e}rification s\IeC {\'e}mantique}{10}
+\contentsline {section}{\numberline {5}Machine virtuelle}{10}
+\contentsline {subsection}{\numberline {5.1}Les structures de donn\IeC {\'e}es de la machine virtuelle}{11}
+\contentsline {subsection}{\numberline {5.2}L'ex\IeC {\'e}cution du code interm\IeC {\'e}diaire}{12}
+\contentsline {subsection}{\numberline {5.3}Evaluation des expressions arithm\IeC {\'e}tiques}{13}
+\contentsline {section}{\numberline {6}Conclusion}{15}
+\contentsline {section}{R\IeC {\'e}f\IeC {\'e}rences}{16}

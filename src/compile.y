@@ -109,9 +109,9 @@ affine:
 int main( int argc, char **argv ) {
     ast *a;
 
-    if( argc != 2 ) {
+    if( argc < 2 ) {
         printf("Entrez une expression :\n");
-    }else{
+    }else if (argc == 2){
         yyin = fopen(argv[1], "r");
         yyout = fopen("output.c", "w");
         if (yyout == NULL) {
@@ -121,6 +121,9 @@ int main( int argc, char **argv ) {
             fprintf(stderr, "Error opening file %s !\n", argv[1]);
             exit(1);
         }
+    } else {
+        fprintf(stderr, "Too many arguments\n");
+        exit(1);
     }
 
     if (yyparse(&a) == 0) {  
@@ -135,10 +138,8 @@ int main( int argc, char **argv ) {
             printf("\nstarting code print\n");
             code_print(codelist);
             printf("end code print\n\n");
-            state* program_state = check_alloc(sizeof(struct state));
-            program_state->ready_activities = add_ready(program_state->ready_activities,add_activity(program_state->ready_activities->activity, 0, NULL) );
             printf("starting code execution\n");
-            run(codelist, program_state);
+            run(codelist);
             print_state(program_state );
         }else 
             printf("error: empty code list\n");

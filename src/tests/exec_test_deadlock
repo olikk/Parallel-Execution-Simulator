@@ -1,0 +1,6 @@
+finish (c1, c2){
+    async (c1, c2){
+        advance c1;
+    }
+    advance c2;
+}
