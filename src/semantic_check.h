@@ -1,6 +1,8 @@
 #ifndef __SEMANTIC_CHECK_H
 #define __SEMANTIC_CHECK_H
 
+
+
 typedef enum { counter_type, clock_type } symbol_type;
 typedef struct symbol{
     symbol_type type;

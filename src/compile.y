@@ -51,19 +51,19 @@
 
 
 %%
-program: list_stmt                                  { printf("rendering AST\n"); (*(ast**)ast_result) = $1; }
+program: list_stmt                                  { printf("rendering AST\n\n"); (*(ast**)ast_result) = $1; }
     ;
     
 stmt:
-        instruction ';'                             { printf("INSTRUCTION\n"); $$ = ast_new_basic($1); }
-    |   FOR ID '=' range block                      { printf("FOR stmt\n"); $$ = ast_new_for($2, $4, $5); }
-    |   IF '(' affine ')' block                     { printf("IF stmt\n"); $$ = ast_new_if($3, $5, NULL); }
-    |   IF '(' affine ')' block ELSE block          { printf("IF ELSE stmt\n"); $$ = ast_new_if($3, $5, $7); }
-    |   FINISH '(' clocks ')' block                 { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", $3, $5); }
-    |   FINISH block                                { printf("FINISH stmt\n"); $$ = ast_new_parallel("finish", NULL , $2); }
-    |   ASYNC '(' clocks ')' block                  { printf("ASYNC stmt\n"); $$ = ast_new_parallel("async", $3, $5); }
-    |   ASYNC block                                 { printf("ASYNC stmt\n"); $$ = ast_new_parallel("async", NULL, $2); }
-    |   ADVANCE ID ';'                              { printf("ADVANCE stmt\n"); $$ = ast_new_advance($2); }
+        instruction ';'                             { $$ = ast_new_basic($1); }
+    |   FOR ID '=' range block                      { $$ = ast_new_for($2, $4, $5); }
+    |   IF '(' affine ')' block                     { $$ = ast_new_if($3, $5, NULL); }
+    |   IF '(' affine ')' block ELSE block          { $$ = ast_new_if($3, $5, $7); }
+    |   FINISH '(' clocks ')' block                 { $$ = ast_new_parallel("finish", $3, $5); }
+    |   FINISH block                                { $$ = ast_new_parallel("finish", NULL , $2); }
+    |   ASYNC '(' clocks ')' block                  { $$ = ast_new_parallel("async", $3, $5); }
+    |   ASYNC block                                 { $$ = ast_new_parallel("async", NULL, $2); }
+    |   ADVANCE ID ';'                              { $$ = ast_new_advance($2); }
     ;
 
 instruction: ID 
@@ -71,24 +71,24 @@ instruction: ID
 
 clocks: 
         /*%empty*/                                   { $$ = NULL; }
-    |   clocks ',' ID                                {printf("CLOCKS\n"); $$ = push_clock($1, $3);}
-    |   ID                                           {printf("FIRST CLOCK\n"); $$ = push_clock(NULL, $1);}
+    |   clocks ',' ID                                {$$ = push_clock($1, $3);}
+    |   ID                                           {$$ = push_clock(NULL, $1);}
     ;
 
 block:
-        '{' list_stmt '}'                           { printf("block\n"); $$ = $2;}
+        '{' list_stmt '}'                           { $$ = $2;}
     |   stmt
     ;
 
-range: affine RANGE affine                          { printf("range\n"); $$ = ast_new_range($1, $3); }
+range: affine RANGE affine                          { $$ = ast_new_range($1, $3); }
     ;
 
 list_stmt:
-        list_stmt stmt                              { printf("stmt block\n"); 
+        list_stmt stmt                              { 
                                                       $1->u.statements = new_statements($2, $1->u.statements);
                                                       $$ = $1; 
                                                     }
-    |   stmt                                        { printf("stmt\n"); $$ = ast_new_statements(new_statements($1,NULL));}
+    |   stmt                                        { $$ = ast_new_statements(new_statements($1,NULL));}
     ;
 
 affine:
@@ -110,7 +110,7 @@ int main( int argc, char **argv ) {
     ast *a;
 
     if( argc < 2 ) {
-        printf("Entrez une expression :\n");
+        printf("Enter instructions :\n");
     }else if (argc == 2){
         yyin = fopen(argv[1], "r");
         yyout = fopen("output.c", "w");
@@ -127,20 +127,21 @@ int main( int argc, char **argv ) {
     }
 
     if (yyparse(&a) == 0) {  
+        int i;
         ast_print(a,0);
-        if (semantic_check(a,NULL) == 1){
+        printf("\n\n starting semantic check\n\n");
+        if ((i = semantic_check(a,NULL)) == 1){
             return 1;
         }
-        printf("starting code generation\n");
+        printf("\n starting code generation\n\n");
         code* codelist = ast_to_code(a, NULL);
-        printf("code generation done\n");
+        printf("\n code generation done\n");
         if (codelist != NULL){
-            printf("\nstarting code print\n");
+            printf("\n\n starting code print \n\n");
             code_print(codelist);
-            printf("end code print\n\n");
-            printf("starting code execution\n");
+            printf("\n end code print\n\n");
+            printf("\n starting code execution\n\n");
             run(codelist);
-            print_state(program_state );
         }else 
             printf("error: empty code list\n");
     } else return 1;

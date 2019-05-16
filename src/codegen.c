@@ -156,7 +156,7 @@ code* ast_to_code(ast* ast, code* codelist) {
     case finish_type :
       printf("finish code\n");
       codelist = code_add(codelist, code_gen(code_num++,"FINISH",NULL , 0));
-      clock* clock_finish = ast->u.finish_stmt.clocks;  //NULL pointer 
+      clock* clock_finish = ast->u.finish_stmt.clocks;  
       while(clock_finish != NULL){
         codelist = code_add(codelist, code_gen(code_num++,"CLOCK_CREATE", clock_finish->id , 0)); 
         clock_finish = clock_finish->prec;

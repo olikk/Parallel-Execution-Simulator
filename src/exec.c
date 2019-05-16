@@ -42,15 +42,6 @@ clocks* find_clock(char* id, clocks_list* list){
 	}
 	return temp->element;
 }
-/*void clock_register(clocks* clk, activity* a){
-	if (clk->registered != NULL){
-		clk->registered->next = clk->registered;
-		clk->registered = a;
-	}else{
-		clk->registered = a;
-		clk->registered->next = NULL;
-	}
-}*/
 
 void remove_activity(activity_list** list, int id){
     struct activity_list* curr; //clk->registered;
@@ -185,19 +176,9 @@ finish_list* add_finish_list(finish_list* root, finish_list* new){
 activity_list* remove_ready_activity(activity_list* act){
 	return act->next;
 }
-/*void activity_free(activity* a){
-	activity* temp;
-	while (a!=NULL){
-		temp = a->next;
-		free(a);
-		a = temp;
-	}
-}*/
 void clock_free(clocks* clock){
 	free(clock->registered);
 	free(clock->blocked);
-	//activity_free(clock->registered);
-	//activity_free(clock->blocked);
 	free(clock);
 }
 

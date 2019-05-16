@@ -33,7 +33,6 @@ int pop(pile* root) {
     pile* temp = root; 
     root = root->next; 
     int popped = temp->num; 
-    //free(temp); 
-  
+
     return popped; 
 }

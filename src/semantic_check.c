@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+int return_code = 0;
+
 symbol* symbol_add (symbol * tab, char * id, symbol_type type){
 	symbol* new = (symbol *)malloc(sizeof(struct symbol));
 	new->id = id;
@@ -32,8 +34,8 @@ static void statements_semantic_check(statements* statements, symbol* tab){
 }
 
 int semantic_check(ast* ast, symbol* tab){
-	int return_code = 0;
-	if(ast!=NULL){
+	if(ast != NULL){
+
 		switch (ast->type){
 
 			case id_type :
@@ -113,7 +115,6 @@ int semantic_check(ast* ast, symbol* tab){
 					}   
 					temp = temp->prec;
 				}
-				//free(temp);
 				//copy all counter symbols to the new table
 				while (tab != NULL){
 					if (tab->type == counter_type){

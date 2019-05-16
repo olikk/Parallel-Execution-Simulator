@@ -50,7 +50,7 @@ ast* ast_new_operation(char* op, ast* left, ast* right) {
 
 }
 /*
-  * make assignement node                         -------> maybe not necessary!!! (only for "for")
+  * make assignement node 
 */
 ast* ast_new_assignment(char* name, ast* right){
 
@@ -243,11 +243,7 @@ void ast_print(ast* ast, int indent) {
       print_clock(ast->u.finish_stmt.clocks);
       printf("\n");
       ast_print(ast->u.finish_stmt.stmt, indent + 1);
-     
-      /*for (int i=0; i<=indent;i++){
-        printf("    ");
-      }*/
-      
+
       break;
 
     case async_type :

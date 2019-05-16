@@ -53,7 +53,6 @@ M1 SIL} % optionnel
 
 
 
-
 \maketitle
 
 \newpage
@@ -82,7 +81,7 @@ Dans les parties suivantes, j'expliquerai ce que signifient ces termes.
 
 Les programmes parallèles permettent de créer les activités qui peuvent exécuter les instructions indépendamment. 
 Souvent ces activités ont besoin d'acceder aux mêmes ressources. 
-Pour ne pas avoir les résultats imprévus lors de modification de données par les processus différents, les ressources sont synchronisées. 
+Pour ne pas avoir des résultats imprévus lors de modification de données par les processus différents, les ressources sont synchronisées. 
 Cela veut dire que les processus peuvent acceder aux données chacun à son tour. 
 Pour attendre la libération de données ou la fin d'instructions d'un processus, un programme parallèle utilise les horloges qui sont les barrières de synchronisation.
 \newpage
@@ -151,19 +150,21 @@ Ci-dessous je vais décrire les principales parties de mon travail et préciser 
 % \end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Le langage}
+\subsection{Le langage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- Comme il était mentionné avant, le langage expérimentale dont on a besoin est une version simplifiée de langages classiques de programmation. 
- Son syntaxe ressemble à celui de langage parallèle X10. \\
- 
- Voici les instructions principales du langages dont on a besoin dans le cadre de ce recherche: \\
+
+Le langage expérimental dont on a besoin est une version simplifiée (avec les instructions de base)
+  d'un langage parallèle de programmation. 
+Sa syntaxe se ressemble à celui du langage parallèle X10, un exemple du programme est représenté sur la Figure 3. \\\\Voici les instructions principales du langages dont on a besoin dans le cadre de cette recherche: \\
 
 
  \begin{description}[itemsep=2em]
   \item[Boucles et Tests] :
 
   Pour avoir une possibilité de créer plusieurs activités, le langage doit savoir reconnaître les boucles et vérifier 
-  les conditions. \\ Les seuls variables dans ce langage sont les compteurs de boucles. \\Le syntaxe est suivant: 
+  les conditions. \\ Les seules variables dans ce langage sont les compteurs de boucles. \\La syntaxe est la suivante: 
+
+
   \begin{itemize} 
     \item \textbf{for i = 0 .. 8 {}} - répéter une instruction pour i de 0 à 8
     \item \textbf{if (i < 7) {}}
@@ -175,26 +176,37 @@ Ci-dessous je vais décrire les principales parties de mon travail et préciser 
 \begin{itemize} 
   \item \textbf{finish (clock1, ...) {}} - créer un block avec les horloges qu'on peut utiliser pour synchroniser les activités
   \item \textbf{async (clock1, ...) {}} - créer une activité qui peut dépendre d'une clock (p.e. clock1 ici)
-  \item \textbf{advance clock1} - créer une barrière de synchronisation avec la clock (clock1 ici)
+  \item \textbf{advance clock1} - créer une barrière de synchronisation sur une clock (clock1 ici)
 \end{itemize} 
 \newpage
 \item[Les horloges] :
  
-Chacune de ces instructions peut contenir une horloge (une clock), car c'est un point important dans la programmation parallèle. Les activités sont
-indépendantes mais peuvent être enregistrées avec une ou plusieurs horloges communes.\\
+
+Chaque instruction peut contenir une horloge (une clock), car c'est un point important dans la programmation parallèle. Les activités sont
+indépendantes mais peuvent être enregistrées avec une ou plusieurs horloges communes.\\\\
 Les horloges créées par \textit{finish} peuvent être utilisées que à l'intérieur de ce bloc. Pour utiliser une horloge dans une nouvelle activité, 
-elle doit être précisée par \textit{async}, cela peut être également une liste de clocks. Une barrière de synchronisation \textit{advance} peut utiliser une clock à la fois.\\
-Il est important de mentionner que à tout moment du programme on sait exactement quelles sont les clocks visibles.
+elle doit être précisée par \textit{async}, cela peut être également une liste de clocks. \\Une barrière de synchronisation \textit{advance} peut utiliser une clock à la fois.\\\\
+Il est important de mentionner qu'à tout moment du programme on sait exactement quelles sont les clocks visibles.
 \item[les instructions] : 
  
 Les instructions ne sont pas importantes dans la recherche, c'est pourquoi seulement les instructions basiques, comme 'S2;', sont présentes.
 \end{description}
+
+
+
+\begin{figure}[h]
+  \includegraphics[scale=1]{ex_lang}
+  \centering
+  \caption{Exemple d'un programme parallèle}
+  \centering
+\end{figure}
+
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Le compilateur}
+\subsection{Le compilateur}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Les trois parties importantes d'une compilation ce sont: un analyseur lexical, un analyseur syntaxique,
+Les trois parties importantes de la compilation ce sont: un analyseur lexical, un analyseur syntaxique,
  qui produit en sortie un arbre syntaxique abstrait, et un générateur de code intermédiaire.
 
 \subsection{Grammaire}
@@ -250,8 +262,8 @@ La structure d'un AST contient 12 types de nœuds - un nœud par instruction  :
   \item if
 \end{itemize}
 
-Chaque de nœud peut avoir au maximum trois fils. \\\\ Il est possible de visualiser un arbre syntaxique abstrait généré grâce à une fonction \textit{ast\_print(ast,indent)}. 
-\\\\Le résultat est présenté sur la Figure \ref{fig:ast} où on peut remarquer que l'hiérarchie de l'arbre est obtenue à l'aide d'une indentation.
+Chaque nœud peut avoir au maximum trois fils. \\\\ Il est possible de visualiser un arbre syntaxique abstrait généré grâce à une fonction \textit{ast\_print(ast,indent)}. 
+\\\\Le résultat est présenté sur la Figure \ref{fig:ast} où on peut remarquer que l'hiérarchie de l'arbre est obtenue à l'aide d'indentation.
 %+ exemple
 \begin{figure}[h]
   \includegraphics[scale=0.5]{ast_exemple}
@@ -270,34 +282,35 @@ L'analyse sémantique comprend:
 
 
 \begin{description}
-  \item[une détection de l'utilisation de variables non initialisées] - comme dans le langage les seuls variables sont les compteurs de boucles, il ne peuvent pas être utilisés avant.
-  \item[une détection des horloges utilisées en dehors de leur portée] - l'activité inscrite à une clock ne peut pas utiliser une autre.
+  \item[une détection de l'utilisation de variables non initialisées] - comme dans le langage les seules variables sont les compteurs de boucles, il ne peuvent pas être utilisés avant cette boucle.
+  \item[une détection des horloges utilisées en dehors de leur portée] - l'activité n'est pas inscrite à une clock ne peut pas l'utiliser.
 \end{description}
 
-L'analyseur sémantique parcours récursivement l'AST et compare les variables et les horloges rencontrés avec le contenu de la table de symboles.\\
-Une clock est supprimée de la table de symboles à chaque fois quand elle est en dehors de la portée d'une instruction. De cette façon, on peut l'instruction comme async ou advance utilise 
+L'analyseur sémantique parcours récursivement un AST et compare les variables et les horloges rencontrées avec le contenu de la table de symboles.\\
+Une clock est supprimée de la table de symboles à chaque fois quand elle est en dehors de la portée d'une instruction. De cette façon, l'instruction comme async ou advance ne peut pas utiliser 
 une horloge qui n'est pas visible pour elle.
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Machine virtuelle}
+\subsection{Machine virtuelle}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Ayant un langage avec les instructions parallèles, il était possible de choisir entre une machine virtuelle parallèle 
-et une machine virtuelle séquentielle pour simuler l'exécution du programme. \\\\ Comme le but principal de l'interpréteur est de pouvoir produire la liste des
-activités en cours et pas la performance du programme, il était décidé d'utiliser un principe de l'exécution séquentielle. 
+Ayant un langage avec les instructions parallèles, il est possible de choisir entre une machine virtuelle parallèle 
+et une machine virtuelle séquentielle pour simuler l'exécution du programme. \\\\ Etant donné que le but principal de l'interpréteur est de pouvoir produire la liste des
+activités en cours et pas la performance du programme, j'ai décidé d'utiliser un principe de l'exécution séquentielle. 
 Cela veut dire, que seulement une activité est exécutée à la fois. 
 
-Ainsi, la machine virtuelle l'exécutera chaque activité \textbf{pas à pas} jusqu'à le moment quand elle sera bloquée et seulement après cela 
+Ainsi, la machine virtuelle l'exécutera chaque activité \textbf{pas à pas} jusqu'au moment qu'elle sera bloquée et seulement après cela 
 la prochaine activité dans une pile va s'exécuter.
 
 \newpage
 \subsection{Les structures de données de la machine virtuelle}
 
-Pour capturer des traces d'exécutions, on garde l'information principale sur le programme,
- comme tous les clocks créées, tous les activités inscrites avec ces clocks, dans les structures.
+Pour capturer des traces d'exécutions, on garde l'information principale sur un programme,
+telle que toutes les clocks créées, toutes les activités inscrites avec ces clocks etc.
 
+Voici la structure de la machine virtuelle: \\
 
 \begin{description}
   \item[state] : 
@@ -339,10 +352,16 @@ Pour capturer des traces d'exécutions, on garde l'information principale sur le
 
 \subsection{L'exécution du code intermédiaire}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-+ expliquer pq on a choisi code -> exec au lieu de ast -> exec
+% expliquer pq on a choisi code -> exec au lieu de ast -> exec
+\noindent Le code intermédiaire est généré à partir d'un arbre de syntaxe abstrait. \\\\
+Il est possible d'exécuter directement un AST sans générer le code, mais 
+comme la machine virtuelle pas à pas a besoin de pouvoir retourner en arrière quand elle 
+fait une boucle ou un changement d'activité, c'est plus logique d'avoir le code avec un compteur ordinal
+que garder un chemin de l'arbre pour chaque instruction. \\\\
+Ci-dissous une spécification sur l'exécution des instructions principales de programme.\\
+
 
 \begin{description}
-  \item[EVAL]
 
   \item[FINISH] : 
   \begin{itemize} 
@@ -397,6 +416,8 @@ Pour capturer des traces d'exécutions, on garde l'information principale sur le
 
 \end{description}
 
+
+
 \subsection{Evaluation des expressions arithmétiques}
 L'évaluation des expressions arithmétiques s'effectue à l'aide d'une pile. Plus précisément, on mets les résultats intermédiaires
 dans la pile et la manipule pour faire le calcul. 
@@ -414,8 +435,11 @@ Sur la Figure \ref{fig:pile} on peut observer une schéma qui montre le principe
   \label{fig:pile}
 \end{figure}
 
+\newpage 
 Pour exécuter ces expressions les instructions spéciales sont présentes dans le code intermédiaire, 
-telles quelles les instructions:
+telles que les instructions:
+
+
 \begin{itemize} 
   \item \textbf{PUSH @ 0} - ajouter une nouvelle variable à l'adresse 0 de la pile
   \item \textbf{PUSH 3} - empiler un entier 3
@@ -423,25 +447,27 @@ telles quelles les instructions:
   \item \textbf{LT, GT, EQ, NE,\dots} - effectuer un comparaison entre les deux valeurs qu'ils sont dans la pile
 \end{itemize} 
 
-Le principe de l'évaluation à l'aide de la pile est assez simple et n'était pas en priorité pour ce recherche, c'est pourquoi 
+
+Le principe de l'évaluation à l'aide de la pile est assez simple et n'est pas en priorité pour ce recherche, c'est pourquoi 
 seulement le code intermédiaire pour les expressions arithmétiques est implémenté dans la version courante du projet.
-\newpage
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Le but de mon travail d'étude et de recherche était de simuler l'exécution de programmes parallèles et d'avoir la possibilité
-de détecter l'interblocage. Dans son cadre un langage de programmation parallèle était créé basé sur le langage déjà existant X10
-mais seulement avec les instructions nécessaires à la suite de la recherche. 
-Pour cela l'analyseur lexical et l'analyseur syntaxique étaient implémentés. Comme résultat d'analyse syntaxique on a un AST. 
-Le code intermédiaire est généré en parcourant un AST. La machine virtuelle séquentielle est réalisée qui parcours pas à pas ce code intermédiaire
+de détecter l'interblocage. Dans son cadre un langage de programmation parallèle a été créé basé sur le langage déjà existant X10
+mais seulement avec les instructions nécessaires pour la suite de la recherche. 
+
+Pour cela l'analyseur lexical et l'analyseur syntaxique étaient implémentés avec comme résultat un arbre de syntaxe abstrait. 
+Le code intermédiaire est généré en parcourant un AST. La machine virtuelle séquentielle réalisée, parcours pas à pas ce code intermédiaire
 et est capable d'afficher l'état global de chaque activité avec l'état d'horloges créées.
 
 Grâce à ce travail il est possible maintenant de détecter un interblocage et analyser l'état de la machine virtuelle pour savoir les horloges et les activités 
-qui sont provoqué cet interblocage.
+qui ont provoqué cet interblocage.
 
-Comme amélioration possible pas réalisée à cause de manque du temps, on pourrait faire une visualisation interactive de l'état d'exécution
-d'un programme parallèle.
+Pour aller plus loin, on pourrait faire une visualisation interactive de l'état d'exécution d'un programme parallèle.
 
 \newpage      
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

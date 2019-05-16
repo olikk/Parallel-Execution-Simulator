@@ -1,11 +1,16 @@
-finish (cl1,cl2) {
-    async (cl3, cl1)  {
+finish (cl1, cl2) {
+    async (cl2)  {
         for i = 1 .. 2{
-            S1;
             advance cl2;
+            S1;
         }
         for j = 0 .. (i/2)
-            if (c > 2)
-                S2;
+            if (c > 2){
+                S3;
+            }    
     }
+    S1;
+    advance cl2;
 } 
+
+
